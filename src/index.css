@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme variables ── */
+:root {
+  --bg: #050816;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.08);
+  --text: #f0f0f5;
+  --muted: #8b8ea0;
+  --accent: #8dd5e6;
+  --accent-strong: #a8e4f0;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+  --bg: #f8f9fc;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --bg-card-hover: rgba(0, 0, 0, 0.06);
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #0ea5e9;
+  --accent-strong: #0284c7;
+  --border: rgba(0, 0, 0, 0.08);
+}
+
+/* ── Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: none;
+  overflow-x: hidden;
+}
+
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+}
+
+::selection {
+  background-color: rgba(141, 213, 230, 0.25);
+  color: #fff;
+}
+
+/* ── Typography ── */
+.font-display {
+  font-family: "Fraunces", "Space Grotesk", serif;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), #38bdf8, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Layout ── */
+.section-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .section-container {
+    padding-inline: 2rem;
+  }
+}
+
+/* ── Glass cards ── */
+.glass {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+
+.glass:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(141, 213, 230, 0.12);
+}
+
+/* ── Background layers ── */
+.bg-hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(141, 213, 230, 0.08), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 80%, rgba(110, 158, 255, 0.06), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 20% 70%, rgba(243, 210, 160, 0.04), transparent 50%);
+}
+
+.mesh-gradient {
+  background: conic-gradient(
+    from 220deg at 50% 50%,
+    rgba(141, 213, 230, 0.04),
+    rgba(110, 158, 255, 0.03),
+    rgba(168, 130, 255, 0.02),
+    rgba(243, 210, 160, 0.03),
+    rgba(141, 213, 230, 0.04)
+  );
+  animation: mesh-rotate 30s linear infinite;
+}
+
+@keyframes mesh-rotate {
+  to {
+    filter: hue-rotate(30deg);
+  }
+}
+
+.glass-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.noise-overlay {
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ── Aurora bands ── */
+.aurora-band {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(141, 213, 230, 0.03) 20%,
+    rgba(110, 158, 255, 0.06) 40%,
+    rgba(168, 130, 255, 0.04) 60%,
+    rgba(141, 213, 230, 0.03) 80%,
+    transparent 100%
+  );
+  filter: blur(40px);
+  animation: aurora-drift 18s ease-in-out infinite alternate;
+}
+
+.aurora-slow {
+  animation-duration: 24s;
+  animation-direction: alternate-reverse;
+  opacity: 0.7;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translateX(-8%) skewX(-4deg) scaleY(0.9);
+  }
+  50% {
+    transform: translateX(4%) skewX(2deg) scaleY(1.1);
+  }
+  100% {
+    transform: translateX(-4%) skewX(-2deg) scaleY(0.95);
+  }
+}
+
+/* ── Light ribbons ── */
+.ribbon {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(141, 213, 230, 0.04) 42%,
+    rgba(141, 213, 230, 0.07) 50%,
+    rgba(141, 213, 230, 0.04) 58%,
+    transparent 70%
+  );
+  filter: blur(28px);
+  opacity: 0.6;
+  transform: rotate(-12deg);
+  animation: ribbon-flow 12s ease-in-out infinite alternate;
+}
+
+.ribbon-alt {
+  transform: rotate(8deg);
+  animation-delay: -5s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes ribbon-flow {
+  from {
+    translate: 0 0;
+    opacity: 0.5;
+  }
+  to {
+    translate: 30px 10px;
+    opacity: 0.7;
+  }
+}
+
+/* ── Smooth scroll sections ── */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* ── Interactive elements (for custom cursor) ── */
+.interactive {
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  .interactive {
+    cursor: pointer;
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ── Perspective helper ── */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* ── Line clamp ── */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════════
+   Skills Marquee — GPU-accelerated infinite scroll
+   ══════════════════════════════════════════════════════ */
+
+.marquee-track {
+  will-change: transform;
+}
+
+.animate-marquee-left {
+  animation: marquee-left 60s linear infinite;
+}
+
+/* Pause entire row on hover */
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left {
+    animation: none;
+  }
+}
