@@ -1,193 +1,140 @@
-import { motion } from "framer-motion";
-import Button from "../../components/ui/Button";
-import Badge from "../../components/ui/Badge";
-import TextReveal from "../../components/TextReveal";
-import AnimatedCounter from "../../components/AnimatedCounter";
-import { cinematicEase, staggerContainer, staggerItem } from "../../utils/motion";
-import HeroHighlights from "./components/HeroHighlights";
-import resumeUrl from "../../../cv_de_saad (1).pdf";
-
-const stats = [
-  { value: "8", suffix: "+", label: "Projects" },
-  { value: "10", suffix: "+", label: "Technologies" },
-  { value: "3", suffix: "+", label: "Years Coding" },
+import { useState } from 'react';
+import {
+  ArrowDown,
+  ArrowUpRight,
+  ArrowRight,
+  Asterisk,
+  BrainCircuit,
+  Database,
+  Code2,
+} from 'lucide-react';
+import Reveal from '../../components/Reveal';
+import OrbitSculpture from '../../components/OrbitSculpture';
+import { projects } from '../../data/portfolioData';
+const disciplines = [
+  {
+    label: 'AI',
+    title: 'Intelligence, applied.',
+    text: 'Teaching machines to read, retrieve, and understand.',
+    icon: BrainCircuit,
+  },
+  {
+    label: 'Data',
+    title: 'Connections, engineered.',
+    text: 'From raw signals to systems that make sense.',
+    icon: Database,
+  },
+  {
+    label: 'Software',
+    title: 'Ideas, made useful.',
+    text: 'Thoughtful tools for real people and real workflows.',
+    icon: Code2,
+  },
 ];
-
-const focusTags = [
-  "Digital Transformation",
-  "Applied AI",
-  "ENSA Al Hoceima",
-  "Data Science",
-  "Full-Stack",
-];
-
 export default function HeroSection() {
+  const [focus, setFocus] = useState(0);
+  const selected = disciplines[focus];
+  const Icon = selected.icon;
+  function moveLight(event) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty(
+      '--glow-x',
+      `${((event.clientX - bounds.left) / bounds.width) * 100}%`,
+    );
+    event.currentTarget.style.setProperty(
+      '--glow-y',
+      `${((event.clientY - bounds.top) / bounds.height) * 100}%`,
+    );
+  }
   return (
-    <section id="hero" className="relative flex min-h-[calc(100vh-64px)] items-center py-20">
-      <div className="section-container grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        {/* Left column */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="show"
-          transition={{ duration: 0.8, ease: cinematicEase }}
-        >
-          {/* Badge with pulse */}
-          <motion.div variants={staggerItem} className="relative inline-block">
-            <Badge className="relative inline-flex items-center">
-              <motion.span
-                className="inline-block h-2 w-2 rounded-full bg-emerald-400 mr-2"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span>Available for Opportunities</span>
-            </Badge>
-          </motion.div>
-
-          {/* Name with character-by-character reveal */}
-          <motion.div variants={staggerItem} className="mt-6">
-            <TextReveal
-              text="Saad Abs"
-              className="font-display text-5xl font-semibold leading-[1.05] tracking-[-0.02em] md:text-7xl lg:text-8xl"
-            />
-          </motion.div>
-
-          {/* Animated role text */}
-          <motion.div
-            variants={staggerItem}
-            className="mt-3"
-          >
-            <motion.p
-              className="bg-gradient-to-r from-[var(--accent)] via-cyan-300 to-blue-400 bg-clip-text text-lg font-medium text-transparent md:text-xl"
-              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              style={{ backgroundSize: "200% 200%" }}
-            >
-              Digital Transformation & AI Engineer
-            </motion.p>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p
-            variants={staggerItem}
-            className="mt-5 max-w-xl text-base leading-relaxed text-[var(--muted)]"
-          >
-            Engineering student blending <span className="text-[var(--text)] font-medium">data science</span>,{" "}
-            <span className="text-[var(--text)] font-medium">AI</span>, and{" "}
-            <span className="text-[var(--text)] font-medium">digital transformation</span>{" "}
-            to build systems that make complex decisions feel simple.
-          </motion.p>
-
-          {/* Stats row */}
-          <motion.div variants={staggerItem} className="mt-8 flex gap-8">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display text-3xl font-bold text-[var(--text)]">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} duration={1.5} />
-                </div>
-                <p className="mt-1 text-xs uppercase tracking-wider text-[var(--muted)]">{stat.label}</p>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* CTA buttons */}
-          <motion.div variants={staggerItem} className="mt-8 flex flex-wrap gap-4">
-            <Button as="a" href="#projects">View Projects</Button>
-            <Button as="a" href="#contact" variant="secondary">Get in Touch</Button>
-            <Button as="a" href={resumeUrl} target="_blank" rel="noreferrer" variant="ghost" download>
-              Download CV
-            </Button>
-          </motion.div>
-
-          {/* Focus tags */}
-          <motion.div variants={staggerItem} className="mt-6 flex flex-wrap gap-2">
-            {focusTags.map((tag, index) => (
-              <motion.span
-                key={tag}
-                initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{
-                  delay: 0.8 + index * 0.08,
-                  duration: 0.4,
-                  ease: cinematicEase,
-                }}
-                whileHover={{ scale: 1.05, borderColor: "rgba(141,213,230,0.5)" }}
-                className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-[var(--muted)] transition-all duration-300"
-              >
-                {tag}
-              </motion.span>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Right column — Hero card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30, rotateY: -8 }}
-          whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: cinematicEase }}
-          className="perspective-1000"
-        >
-          <div className="glass group relative overflow-hidden rounded-3xl p-7">
-            {/* Animated glow orbs */}
-            <motion.div
-              className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-[rgba(141,213,230,0.2)] blur-3xl"
-              animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute -bottom-12 -left-10 h-32 w-32 rounded-full bg-[rgba(243,210,160,0.18)] blur-3xl"
-              animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            />
-
-            {/* Shimmer line on hover */}
-            <motion.div
-              className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-              style={{
-                background: "linear-gradient(105deg, transparent 40%, rgba(141,213,230,0.06) 45%, rgba(141,213,230,0.12) 50%, rgba(141,213,230,0.06) 55%, transparent 60%)",
-                backgroundSize: "200% 100%",
-              }}
-              animate={{ backgroundPosition: ["-100% 0", "200% 0"] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-            />
-
-            <div className="relative z-10">
-              <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                Current Focus
-              </p>
-              <h3 className="font-display text-2xl font-semibold text-[var(--text)]">
-                Human-centered AI Transformation
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                I combine strategy, data, and product thinking to build systems that make complex decisions feel simple.
-              </p>
-            </div>
-
-            <HeroHighlights />
-          </div>
-        </motion.div>
+    <section id="hero" className="hero section-container">
+      <div className="hero-topline">
+        <span>
+          <span className="status-dot" /> OPEN TO PFE INTERNSHIPS
+        </span>
+        <span className="hero-location">BASED IN MOROCCO · BUILDING BEYOND</span>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.5 }}
-      >
-        <motion.span
-          className="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]"
-        >
-          Scroll
-        </motion.span>
-        <motion.div
-          className="h-8 w-[1px] bg-gradient-to-b from-[var(--accent)] to-transparent"
-          animate={{ scaleY: [0, 1, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "top" }}
-        />
-      </motion.div>
+      <div className="hero-grid">
+        <Reveal className="hero-copy">
+          <p className="eyebrow">SAAD ABS / ENGINEERING STUDENT</p>
+          <h1>
+            Complex ideas.
+            <br />
+            Thoughtfully
+            <br />
+            <span className="serif blue-text">made useful.</span>
+            <span className="title-spark">
+              <Asterisk />
+            </span>
+          </h1>
+          <p className="hero-description">
+            I connect <strong>AI, data, and software</strong> to build things that help people.
+            Final-year engineering student at ENSAH, with a curious mind and a builder’s instinct.
+          </p>
+          <div className="hero-actions">
+            <a className="button button-blue" href="#projects">
+              Explore my work <ArrowDown size={17} />
+            </a>
+            <a className="text-link" href="#resumes">
+              Find your CV <ArrowUpRight size={17} />
+            </a>
+          </div>
+          <div className="hero-proof">
+            <span>
+              <strong>{projects.length}</strong> projects & experiments
+            </span>
+            <span className="proof-divider" />
+            <span>
+              <strong>02</strong> industry internships
+            </span>
+          </div>
+        </Reveal>
+        <Reveal className="hero-art" delay={0.12} onPointerMove={moveLight}>
+          <div className="art-meta">
+            <span>
+              <span className="small-cross">+</span> THE INTERSECTION OF
+            </span>
+            <span>01 — 03</span>
+          </div>
+          <div className="art-label art-label-top">
+            <BrainCircuit size={14} /> HUMAN CURIOSITY
+          </div>
+          <OrbitSculpture focus={focus} />
+          <div className="art-label art-label-bottom">
+            ENGINEERING POSSIBILITY <ArrowUpRight size={15} />
+          </div>
+          <div className="art-caption" aria-live="polite">
+            <Icon size={23} strokeWidth={1.3} />
+            <div>
+              <h2>{selected.title}</h2>
+              <p>{selected.text}</p>
+            </div>
+          </div>
+          <div className="art-controls" role="group" aria-label="Explore my disciplines">
+            {disciplines.map((item, index) => (
+              <button
+                key={item.label}
+                onClick={() => setFocus(index)}
+                aria-pressed={focus === index}
+                className={focus === index ? 'selected' : ''}
+              >
+                {item.label}
+                <span>0{index + 1}</span>
+              </button>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+      <div className="hero-bottom">
+        <span>ENGINEERING WITH INTENTION.</span>
+        <a href="#projects">
+          A few things I’ve built <ArrowRight size={16} />
+        </a>
+        <span className="hero-bottom-right">
+          SCROLL TO EXPLORE <ArrowDown size={14} />
+        </span>
+      </div>
     </section>
   );
 }

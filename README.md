@@ -1,71 +1,53 @@
-# Premium Futuristic Portfolio
+# Saad Abs — Portfolio
 
-A premium personal portfolio built with React, Vite, Tailwind CSS, and Framer Motion.
+A personal portfolio for AI, data, cloud, and software engineering. Built with React, Vite, Framer Motion, and Lucide icons.
 
-## Features
+Live site: https://abs-saad.netlify.app/
 
-- Futuristic glassmorphism design with animated gradients
-- Scroll reveal animations and parallax movement
-- Project filtering with interactive cards
-- Skills visualization and animated timeline
-- Contact form with validation
-- Dark/light theme toggle
-- Custom cursor and scroll progress indicator
-- Fully responsive layout
+## Local development
 
-## Tech Stack
+```sh
+npm ci
+npm run dev
+```
 
-- React (hooks + functional components)
-- Vite
-- Tailwind CSS
-- Framer Motion
-- React Icons + Lucide Icons
+```sh
+npm run build
+npm run preview
+```
 
-## Run Locally
+## Updating the portfolio
 
-1. Install dependencies:
+- `src/data/portfolioData.js`: project case studies, verified source links, skills, contact details, and the four CV imports. Project counts are calculated automatically.
+- `src/features/hero/HeroSection.jsx`: the introduction and interactive discipline selector.
+- `src/features/about/AboutSection.jsx`: biography, internships, and education.
+- `src/features/projects/components/ProjectVisual.jsx`: original concept illustrations, labeled as illustrations rather than product screenshots.
+- `src/features/resume/ResumeSection.jsx`: CV previews and downloads with readable filenames.
+- `src/index.css`: palette, typography, responsive layouts, and motion.
+- `public/`: favicon, social sharing preview, sitemap, and robots file.
 
-   npm install
+The four supplied CV PDFs are imported from the project root and bundled by Vite. Replace a PDF and update its import in the data file when a new version is ready. The previous CV has been removed.
 
-2. Start development server:
-
-   npm run dev
-
-3. Build for production:
-
-   npm run build
-
-4. Preview production build:
-
-   npm run preview
-
-## Structure
-
-- src/components/ui: Reusable UI primitives (Button, Card, Badge, SectionWrapper)
-- src/features: Feature modules (hero, about, projects, skills, experience, contact)
-- src/layouts: Main layout wrappers (navbar, footer, global overlays)
-- src/pages: Page composition layer
-- src/context: Global state providers (theme)
-- src/hooks: Reusable custom hooks (scroll progress/animations)
-- src/data: Portfolio content data
-- src/utils: Shared helper functions
-- src/index.css: Global styles, theme tokens, utility classes
-
-## Customize
-
-- Edit your personal content in src/data/portfolioData.js
-- Update hero text in src/features/hero/HeroSection.jsx
-- Replace project links and images in src/data/portfolioData.js
-- Update social links in src/features/contact/components/ContactLinks.jsx
+Contact uses working email links and a copy-email action. It does not claim to send messages from an unconnected form.
 
 ## Automatic Netlify deployment
 
-The build settings are stored in `netlify.toml`.
+The existing Netlify project is connected to `saadas09/final-portfolio`, production branch `main`. `netlify.toml` specifies `npm run build` and the `dist` publish directory.
 
-To enable automatic updates for the existing Netlify site:
+Commit and push reviewed changes to `main` to trigger a new deployment. Saving local files alone does not publish them. Confirm the latest deployment succeeds in Netlify after pushing.
 
-1. Open the site in Netlify and go to Project configuration > Developer settings > Continuous deployment > Repository.
-2. Select Link repository and choose `saadas09/final-portfolio` on GitHub.
-3. Set the production branch to `main`, the build command to `npm run build`, and the publish directory to `dist`.
+## Browser verification
 
-After connecting the repository, each push to `main` triggers a new build and deployment to the existing site URL. Saving files locally does not publish them; commit and push the changes when they are ready.
+With Python, Playwright, and Google Chrome installed, start the local Vite server, then run:
+
+```sh
+python scripts/check_portfolio.py
+```
+
+To verify a production preview or the live site:
+
+```sh
+python scripts/check_portfolio.py https://abs-saad.netlify.app/
+```
+
+The browser checks exercise all 14 project dialogs, filtering, focus restoration, keyboard tab controls, mobile navigation, four actual PDF downloads, copy email, and horizontal overflow at nine widths from 320 to 1920 pixels. Screenshots go to the git-ignored `.qa` directory. Reduced-motion preferences are respected throughout the site.

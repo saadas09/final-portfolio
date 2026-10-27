@@ -1,126 +1,114 @@
-import { motion } from "framer-motion";
-import SectionWrapper from "../../components/ui/SectionWrapper";
-import SkillPill from "./components/SkillPill";
-import {
-  SiPython,
-  SiTensorflow,
-  SiPytorch,
-  SiKeras,
-  SiOpencv,
-  SiScikitlearn,
-  SiPandas,
-  SiNumpy,
-  SiLangchain,
-  SiHuggingface,
-  SiFastapi,
-  SiFlask,
-  SiLaravel,
-  SiPhp,
-  SiSpringboot,
-  SiNodedotjs,
-  SiReact,
-  SiNextdotjs,
-  SiHtml5,
-  SiCss,
-  SiTailwindcss,
-  SiBootstrap,
-  SiJavascript,
-  SiTypescript,
-  SiMysql,
-  SiPostgresql,
-  SiMongodb,
-  SiDocker,
-  SiGit,
-  SiGithub,
-  SiLinux,
-  SiFirebase,
-  SiApachekafka,
-  SiApachespark,
-  SiQt,
-  SiOpenjdk,
-  SiVscodium,
-} from "react-icons/si";
-import { FaMicrosoft, FaDatabase, FaCloud } from "react-icons/fa";
-import { Globe, Cpu } from "lucide-react";
-import { cinematicEase } from "../../utils/motion";
-
-/* ── All 43 technologies ── */
-const allSkills = [
-  { name: "Python", icon: SiPython },
-  { name: "TensorFlow", icon: SiTensorflow },
-  { name: "PyTorch", icon: SiPytorch },
-  { name: "Keras", icon: SiKeras },
-  { name: "OpenCV", icon: SiOpencv },
-  { name: "Scikit-learn", icon: SiScikitlearn },
-  { name: "Pandas", icon: SiPandas },
-  { name: "NumPy", icon: SiNumpy },
-  { name: "LangChain", icon: SiLangchain },
-  { name: "RAG", icon: Cpu },
-  { name: "LLMs", icon: Cpu },
-  { name: "Hugging Face", icon: SiHuggingface },
-  { name: "FastAPI", icon: SiFastapi },
-  { name: "Flask", icon: SiFlask },
-  { name: "Laravel", icon: SiLaravel },
-  { name: "PHP", icon: SiPhp },
-  { name: "Java", icon: SiOpenjdk },
-  { name: "Spring Boot", icon: SiSpringboot },
-  { name: "Node.js", icon: SiNodedotjs },
-  { name: "React", icon: SiReact },
-  { name: "Next.js", icon: SiNextdotjs },
-  { name: "HTML5", icon: SiHtml5 },
-  { name: "CSS3", icon: SiCss },
-  { name: "Tailwind CSS", icon: SiTailwindcss },
-  { name: "Bootstrap", icon: SiBootstrap },
-  { name: "JavaScript", icon: SiJavascript },
-  { name: "TypeScript", icon: SiTypescript },
-  { name: "SQL", icon: FaDatabase },
-  { name: "MySQL", icon: SiMysql },
-  { name: "PostgreSQL", icon: SiPostgresql },
-  { name: "MongoDB", icon: SiMongodb },
-  { name: "Docker", icon: SiDocker },
-  { name: "Git", icon: SiGit },
-  { name: "GitHub", icon: SiGithub },
-  { name: "Linux", icon: SiLinux },
-  { name: "Firebase", icon: SiFirebase },
-  { name: "REST APIs", icon: Globe },
-  { name: "PySide6", icon: SiQt },
-  { name: "Kafka", icon: SiApachekafka },
-  { name: "Spark", icon: SiApachespark },
-  { name: "Azure", icon: FaMicrosoft },
-  { name: "Oracle Cloud", icon: FaCloud },
-  { name: "VS Code", icon: SiVscodium },
-];
+import { useState } from 'react';
+import { ArrowUpRight, BrainCircuit, Code2, Database } from 'lucide-react';
+import { expertise, projects } from '../../data/portfolioData';
+import Reveal from '../../components/Reveal';
+import ProjectDialog from '../projects/components/ProjectDialog';
+const icons = [BrainCircuit, Database, Code2];
 
 export default function SkillsSection() {
-  /* Duplicate 4× for seamless infinite loop */
-  const repeated = [...allSkills, ...allSkills, ...allSkills, ...allSkills];
-
+  const [active, setActive] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const item = expertise[active];
+  const Icon = icons[active];
   return (
-    <SectionWrapper
-      id="skills"
-      eyebrow="Skills"
-      title="Tech Stack"
-      subtitle="Technologies I use to design, build, and deploy AI-powered applications."
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.8, ease: cinematicEase }}
-      >
-        {/* Single marquee row */}
-        <div className="marquee-container relative overflow-hidden">
-          {/* Fade edges */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[var(--bg)] to-transparent sm:w-20 md:w-28" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[var(--bg)] to-transparent sm:w-20 md:w-28" />
-
-          <div className="marquee-track animate-marquee-left flex w-max gap-3 md:gap-4">
-            {repeated.map((skill, i) => (
-              <SkillPill key={`${skill.name}-${i}`} skill={skill} />
+    <section id="skills" className="expertise-section">
+      <div className="section-container section-space">
+        <Reveal>
+          <div className="section-label">
+            <span>02 / MY TOOLKIT</span>
+            <span>ALWAYS A WORK IN PROGRESS</span>
+          </div>
+          <div className="section-heading">
+            <h2>
+              Different disciplines.
+              <br />
+              <span className="serif">One connected mindset.</span>
+            </h2>
+            <p>
+              I like working where fields meet. Each discipline gives me a different way to solve
+              the same question: how can this be more useful?
+            </p>
+          </div>
+        </Reveal>
+        <div className="expertise-layout">
+          <div
+            className="expertise-options"
+            role="tablist"
+            aria-label="Expertise areas"
+            aria-orientation="vertical"
+          >
+            {expertise.map((entry, index) => (
+              <button
+                id={`expertise-tab-${entry.id}`}
+                role="tab"
+                aria-selected={active === index}
+                aria-controls="expertise-panel"
+                tabIndex={active === index ? 0 : -1}
+                key={entry.id}
+                className={active === index ? 'expertise-option selected' : 'expertise-option'}
+                onClick={() => setActive(index)}
+                onKeyDown={(event) => {
+                  let next;
+                  if (event.key === 'ArrowDown' || event.key === 'ArrowRight')
+                    next = (index + 1) % expertise.length;
+                  if (event.key === 'ArrowUp' || event.key === 'ArrowLeft')
+                    next = (index + expertise.length - 1) % expertise.length;
+                  if (event.key === 'Home') next = 0;
+                  if (event.key === 'End') next = expertise.length - 1;
+                  if (next !== undefined) {
+                    event.preventDefault();
+                    setActive(next);
+                    document.getElementById(`expertise-tab-${expertise[next].id}`).focus();
+                  }
+                }}
+              >
+                <span>{entry.number}</span>
+                <div>
+                  <small>{entry.label}</small>
+                  <h3>{entry.title}</h3>
+                </div>
+                <ArrowUpRight size={22} />
+              </button>
             ))}
+            <p className="expertise-note">Built through projects. Strengthened through practice.</p>
+          </div>
+          <div
+            className="expertise-panel"
+            id="expertise-panel"
+            role="tabpanel"
+            aria-labelledby={`expertise-tab-${item.id}`}
+            tabIndex={0}
+          >
+            <div className="expertise-panel-head">
+              <span>THE TOOLS BEHIND THE WORK</span>
+              <Icon size={32} strokeWidth={1.3} />
+            </div>
+            <p className="expertise-description">{item.text}</p>
+            <div className="skill-tags">
+              {item.tools.map((tool) => (
+                <span key={tool}>{tool}</span>
+              ))}
+            </div>
+            <div className="foundations">
+              <span>ALSO EXPLORING & STUDYING</span>
+              <p>{item.foundations.join(' · ')}</p>
+            </div>
+            <div className="skills-in-practice">
+              <span>SEE IT IN PRACTICE</span>
+              {item.projectIds.map((id) => {
+                const project = projects.find((p) => p.id === id);
+                return (
+                  <button key={id} onClick={() => setSelected(project)}>
+                    {project.title}
+                    <ArrowUpRight size={16} />
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </motion.div>
-    </SectionWrapper>
+      </div>
+      <ProjectDialog project={selected} onClose={() => setSelected(null)} />
+    </section>
   );
 }
