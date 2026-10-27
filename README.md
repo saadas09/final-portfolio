@@ -57,3 +57,15 @@ A premium personal portfolio built with React, Vite, Tailwind CSS, and Framer Mo
 - Update hero text in src/features/hero/HeroSection.jsx
 - Replace project links and images in src/data/portfolioData.js
 - Update social links in src/features/contact/components/ContactLinks.jsx
+
+## Automatic Netlify deployment
+
+The build settings are stored in `netlify.toml`.
+
+To enable automatic updates for the existing Netlify site:
+
+1. Open the site in Netlify and go to Project configuration > Developer settings > Continuous deployment > Repository.
+2. Select Link repository and choose `saadas09/final-portfolio` on GitHub.
+3. Set the production branch to `main`, the build command to `npm run build`, and the publish directory to `dist`.
+
+After connecting the repository, each push to `main` triggers a new build and deployment to the existing site URL. Saving files locally does not publish them; commit and push the changes when they are ready.
