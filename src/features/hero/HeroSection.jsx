@@ -1,140 +1,92 @@
-import { useState } from 'react';
-import {
-  ArrowDown,
-  ArrowUpRight,
-  ArrowRight,
-  Asterisk,
-  BrainCircuit,
-  Database,
-  Code2,
-} from 'lucide-react';
-import Reveal from '../../components/Reveal';
-import OrbitSculpture from '../../components/OrbitSculpture';
-import { projects } from '../../data/portfolioData';
-const disciplines = [
-  {
-    label: 'AI',
-    title: 'Intelligence, applied.',
-    text: 'Teaching machines to read, retrieve, and understand.',
-    icon: BrainCircuit,
-  },
-  {
-    label: 'Data',
-    title: 'Connections, engineered.',
-    text: 'From raw signals to systems that make sense.',
-    icon: Database,
-  },
-  {
-    label: 'Software',
-    title: 'Ideas, made useful.',
-    text: 'Thoughtful tools for real people and real workflows.',
-    icon: Code2,
-  },
-];
+import { useLayoutEffect, useRef, useState } from 'react';
+import { ArrowDown, ArrowUpRight, MoveUpRight } from 'lucide-react';
+import gsap from 'gsap';
+import ChromeSculpture from '../../components/ChromeSculpture';
+import { useMotion } from '../../components/MotionProvider';
+const modes = ['Intelligence', 'Connection', 'Creation'];
 export default function HeroSection() {
-  const [focus, setFocus] = useState(0);
-  const selected = disciplines[focus];
-  const Icon = selected.icon;
-  function moveLight(event) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches) return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty(
-      '--glow-x',
-      `${((event.clientX - bounds.left) / bounds.width) * 100}%`,
-    );
-    event.currentTarget.style.setProperty(
-      '--glow-y',
-      `${((event.clientY - bounds.top) / bounds.height) * 100}%`,
-    );
-  }
+  const [mode, setMode] = useState(0);
+  const { enabled } = useMotion();
+  const ref = useRef(null);
+  useLayoutEffect(() => {
+    if (!enabled) return;
+    const ctx = gsap.context(() => {
+      gsap.set('.hero-name > span', { yPercent: 110, rotate: 4 });
+      gsap.set('.hero-enter', { opacity: 0, y: 25 });
+      gsap
+        .timeline({ defaults: { ease: 'power3.out' } })
+        .to('.hero-enter', { opacity: 1, y: 0, duration: 1, stagger: 0.12 }, 0.1)
+        .to('.hero-name > span', { yPercent: 0, rotate: 0, duration: 1.6, stagger: 0.15 }, 0.15);
+    }, ref);
+    return () => ctx.revert();
+  }, [enabled]);
   return (
-    <section id="hero" className="hero section-container">
-      <div className="hero-topline">
-        <span>
-          <span className="status-dot" /> OPEN TO PFE INTERNSHIPS
+    <section id="hero" className="hero" ref={ref}>
+      <div className="hero-grid" aria-hidden="true" />
+      <div className="hero-top hero-enter">
+        <span className="mono">
+          <i className="status-dot" /> OPEN FOR A PFE INTERNSHIP
         </span>
-        <span className="hero-location">BASED IN MOROCCO · BUILDING BEYOND</span>
+        <span className="mono hero-edition">BASED IN MOROCCO · BUILT FOR WHAT’S NEXT</span>
       </div>
-      <div className="hero-grid">
-        <Reveal className="hero-copy">
-          <p className="eyebrow">SAAD ABS / ENGINEERING STUDENT</p>
-          <h1>
-            Complex ideas.
-            <br />
-            Thoughtfully
-            <br />
-            <span className="serif blue-text">made useful.</span>
-            <span className="title-spark">
-              <Asterisk />
-            </span>
-          </h1>
-          <p className="hero-description">
-            I connect <strong>AI, data, and software</strong> to build things that help people.
-            Final-year engineering student at ENSAH, with a curious mind and a builder’s instinct.
-          </p>
-          <div className="hero-actions">
-            <a className="button button-blue" href="#projects">
-              Explore my work <ArrowDown size={17} />
-            </a>
-            <a className="text-link" href="#resumes">
-              Find your CV <ArrowUpRight size={17} />
-            </a>
-          </div>
-          <div className="hero-proof">
-            <span>
-              <strong>{projects.length}</strong> projects & experiments
-            </span>
-            <span className="proof-divider" />
-            <span>
-              <strong>02</strong> industry internships
-            </span>
-          </div>
-        </Reveal>
-        <Reveal className="hero-art" delay={0.12} onPointerMove={moveLight}>
-          <div className="art-meta">
-            <span>
-              <span className="small-cross">+</span> THE INTERSECTION OF
-            </span>
-            <span>01 — 03</span>
-          </div>
-          <div className="art-label art-label-top">
-            <BrainCircuit size={14} /> HUMAN CURIOSITY
-          </div>
-          <OrbitSculpture focus={focus} />
-          <div className="art-label art-label-bottom">
-            ENGINEERING POSSIBILITY <ArrowUpRight size={15} />
-          </div>
-          <div className="art-caption" aria-live="polite">
-            <Icon size={23} strokeWidth={1.3} />
-            <div>
-              <h2>{selected.title}</h2>
-              <p>{selected.text}</p>
-            </div>
-          </div>
-          <div className="art-controls" role="group" aria-label="Explore my disciplines">
-            {disciplines.map((item, index) => (
-              <button
-                key={item.label}
-                onClick={() => setFocus(index)}
-                aria-pressed={focus === index}
-                className={focus === index ? 'selected' : ''}
-              >
-                {item.label}
-                <span>0{index + 1}</span>
+      <div className="hero-intro hero-enter">
+        <span className="eyebrow">AI / DATA / SOFTWARE</span>
+        <p>
+          Curious mind.
+          <br />
+          Restless builder.
+          <br />
+          <span>Endless possibilities.</span>
+        </p>
+      </div>
+      <div className="hero-orbit" aria-hidden="true">
+        <span>IDEAS INTO IMPACT</span>
+        <i />
+        <b>+</b>
+      </div>
+      <ChromeSculpture mode={mode} />
+      <div className="sculpture-caption hero-enter">
+        <span className="mono">
+          FIG. 0{mode + 1} / {modes[mode].toUpperCase()}
+        </span>
+        <span className="drag-note">
+          DRAG TO EXPLORE <MoveUpRight size={12} />
+        </span>
+      </div>
+      <h1 className="hero-name" aria-label="Saad Abs">
+        <span>SAAD</span>
+        <span>
+          ABS<span className="name-period">.</span>
+        </span>
+      </h1>
+      <div className="hero-bottom hero-enter">
+        <p>
+          Engineering student turning complex problems
+          <br className="desktop-break" /> into useful experiences. A little obsessed with both.
+        </p>
+        <div className="hero-modes" aria-label="Choose a sculpture">
+          <span className="mono">CHANGE THE PERSPECTIVE</span>
+          <div>
+            {['AI', 'Data', 'Software'].map((label, i) => (
+              <button key={label} aria-pressed={mode === i} onClick={() => setMode(i)}>
+                <span>0{i + 1}</span>
+                {label}
               </button>
             ))}
           </div>
-        </Reveal>
-      </div>
-      <div className="hero-bottom">
-        <span>ENGINEERING WITH INTENTION.</span>
-        <a href="#projects">
-          A few things I’ve built <ArrowRight size={16} />
+        </div>
+        <a href="#projects" className="round-link">
+          <span>
+            EXPLORE
+            <br />
+            THE WORK
+          </span>
+          <ArrowDown size={21} />
         </a>
-        <span className="hero-bottom-right">
-          SCROLL TO EXPLORE <ArrowDown size={14} />
-        </span>
       </div>
+      <a href="#contact" className="hero-side-link">
+        LET’S BUILD SOMETHING <ArrowUpRight size={14} />
+      </a>
     </section>
   );
 }

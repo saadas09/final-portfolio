@@ -4,6 +4,7 @@ import SkillsSection from '../features/skills/SkillsSection';
 import AboutSection from '../features/about/AboutSection';
 import ResumeSection from '../features/resume/ResumeSection';
 import ContactSection from '../features/contact/ContactSection';
+import ScrollEffects from '../components/ScrollEffects';
 export default function Home() {
   return (
     <>
@@ -13,6 +14,7 @@ export default function Home() {
       <AboutSection />
       <ResumeSection />
       <ContactSection />
+      <ScrollEffects />
     </>
   );
 }

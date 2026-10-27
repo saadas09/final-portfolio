@@ -1,41 +1,51 @@
-import { ArrowUpRight, Download, FileText } from 'lucide-react';
+import { ArrowUpRight, Download } from 'lucide-react';
 import { resumes } from '../../data/portfolioData';
 import Reveal from '../../components/Reveal';
 export default function ResumeSection() {
   return (
-    <section id="resumes" className="resume-section section-container section-space">
-      <Reveal>
-        <div className="section-label">
-          <span>04 / THE CV LIBRARY</span>
-          <span>FOUR WAYS TO GET TO KNOW MY WORK</span>
-        </div>
-        <div className="section-heading">
-          <h2>
-            Same curiosity.
-            <br />
-            <span className="serif">The right perspective.</span>
-          </h2>
-          <p>
-            Looking for a particular skill set? Choose the CV that fits your team, or take the full
-            picture.
-          </p>
-        </div>
-      </Reveal>
-      <div className="resume-grid">
-        {resumes.map((resume, index) => (
-          <Reveal key={resume.id} delay={index * 0.05}>
-            <article className={`resume-card resume-${resume.color}`}>
+    <section id="resumes" className="resume-section">
+      <div className="section-container">
+        <Reveal>
+          <div className="section-label">
+            <span>04 / TAKE A CLOSER LOOK</span>
+            <span>FOUR PERSPECTIVES. SAME SAAD.</span>
+          </div>
+          <div className="resume-heading">
+            <h2>
+              A little more
+              <br />
+              <em>on paper.</em>
+            </h2>
+            <p>
+              Pick the perspective that fits your team.
+              <br />
+              Or get the full picture.
+              <br />
+              <span>FOUR CVS. ZERO GUESSWORK.</span>
+            </p>
+          </div>
+        </Reveal>
+        <div className="resume-grid">
+          {resumes.map((resume, i) => (
+            <article
+              key={resume.id}
+              className={`resume-card resume-${resume.color}`}
+              style={{ '--rotation': `${[-3, 2, -2, 3][i]}deg` }}
+            >
               <div className="resume-card-top">
-                <span>
-                  {resume.number} / {resume.label}
-                </span>
-                <FileText size={22} strokeWidth={1.3} />
+                <span>SA / {resume.number}</span>
+                <ArrowUpRight size={24} />
               </div>
+              <div className="resume-paper-lines" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+                <i />
+              </div>
+              <span className="resume-label">{resume.label}</span>
               <h3>{resume.name}</h3>
               <p>{resume.description}</p>
-              <div className="resume-meta">
-                PDF <span>·</span> {resume.pages} <span>·</span> English
-              </div>
+              <div className="resume-meta">PDF / {resume.pages} / ENGLISH</div>
               <div className="resume-actions">
                 <a
                   href={resume.url}
@@ -43,21 +53,21 @@ export default function ResumeSection() {
                   className="resume-download"
                   aria-label={`Download ${resume.name} CV`}
                 >
-                  Download CV <Download size={16} />
+                  Download <Download size={17} />
                 </a>
                 <a
                   href={resume.url}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`Preview ${resume.name} CV`}
                   className="resume-preview"
+                  aria-label={`Preview ${resume.name} CV`}
                 >
                   <ArrowUpRight size={20} />
                 </a>
               </div>
             </article>
-          </Reveal>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

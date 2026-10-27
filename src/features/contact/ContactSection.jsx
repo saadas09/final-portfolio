@@ -1,67 +1,70 @@
-import { useRef, useState, useEffect } from 'react';
-import { ArrowUpRight, Check, Copy, Github, Linkedin } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, Check, Copy } from 'lucide-react';
 import { personal } from '../../data/portfolioData';
 import Reveal from '../../components/Reveal';
 export default function ContactSection() {
-  const [copyState, setCopyState] = useState('');
+  const [status, setStatus] = useState('');
   const timeout = useRef(null);
   useEffect(() => () => clearTimeout(timeout.current), []);
-  async function copyEmail() {
+  async function copy() {
     clearTimeout(timeout.current);
     try {
       await navigator.clipboard.writeText(personal.email);
-      setCopyState('Email copied');
+      setStatus('Email copied');
     } catch {
-      setCopyState('Select the email address below to copy it.');
+      setStatus('Select the email address to copy it.');
     }
-    timeout.current = setTimeout(() => setCopyState(''), 4500);
+    timeout.current = setTimeout(() => setStatus(''), 4500);
   }
   return (
     <section id="contact" className="contact-section">
       <div className="section-container">
         <Reveal>
           <div className="section-label">
-            <span>05 / WHAT’S NEXT?</span>
+            <span>05 / GREAT THINGS START SOMEWHERE.</span>
             <span>
-              <span className="status-dot" /> OPEN TO OPPORTUNITIES
+              <i className="status-dot" /> OPEN TO OPPORTUNITIES
             </span>
           </div>
           <div className="contact-main">
             <h2>
-              Good things start
+              Let’s make
               <br />
-              with a <span className="serif">conversation.</span>
+              <em>it matter.</em>
             </h2>
             <a
-              href={`mailto:${personal.email}`}
               className="contact-arrow"
+              href={`mailto:${personal.email}`}
               aria-label="Email Saad Abs"
             >
-              <ArrowUpRight size={57} strokeWidth={1.2} />
+              <ArrowUpRight strokeWidth={1} />
             </a>
           </div>
           <div className="contact-bottom">
             <div>
               <p>
-                A PFE internship, an interesting problem, or an idea worth exploring.
-                <br /> I’d love to hear about it.
+                A PFE internship. A bold idea. An interesting problem.
+                <br />
+                I’m listening.
               </p>
               <div className="email-row">
                 <a href={`mailto:${personal.email}`}>{personal.email}</a>
-                <button className="copy-email" onClick={copyEmail} aria-label="Copy email address">
-                  {copyState === 'Email copied' ? <Check size={17} /> : <Copy size={17} />}
+                <button className="copy-email" onClick={copy} aria-label="Copy email address">
+                  {status === 'Email copied' ? <Check size={19} /> : <Copy size={19} />}
                 </button>
               </div>
               <p className="copy-status" role="status">
-                {copyState}
+                {status}
               </p>
             </div>
             <div className="contact-socials">
               <a href={personal.github} target="_blank" rel="noreferrer">
-                <Github size={17} /> GitHub <ArrowUpRight size={16} />
+                GitHub
+                <ArrowUpRight size={20} />
               </a>
               <a href={personal.linkedin} target="_blank" rel="noreferrer">
-                <Linkedin size={17} /> LinkedIn <ArrowUpRight size={16} />
+                LinkedIn
+                <ArrowUpRight size={20} />
               </a>
             </div>
           </div>

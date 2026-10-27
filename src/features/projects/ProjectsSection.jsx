@@ -1,129 +1,184 @@
-import { useRef, useState } from 'react';
-import { ArrowDown, ArrowUp, ArrowUpRight } from 'lucide-react';
-import { filters, projects } from '../../data/portfolioData';
-import Reveal from '../../components/Reveal';
+import { useState } from 'react';
+import { ArrowDown, ArrowUpRight, Plus, Minus } from 'lucide-react';
+import { projects, filters } from '../../data/portfolioData';
 import ProjectVisual from './components/ProjectVisual';
 import ProjectDialog from './components/ProjectDialog';
-
+import Reveal from '../../components/Reveal';
+const titles = [
+  <>
+    Opportunity.
+    <br />
+    Reimagined.
+  </>,
+  <>
+    Learning.
+    <br />
+    Without limits.
+  </>,
+  <>
+    Our language.
+    <br />
+    Machine readable.
+  </>,
+  <>
+    Knowledge.
+    <br />
+    In conversation.
+  </>,
+];
 export default function ProjectsSection() {
-  const [filter, setFilter] = useState('All work');
-  const [expanded, setExpanded] = useState(false);
   const [selected, setSelected] = useState(null);
-  const firstExtra = useRef(null);
-  const filtered = projects.filter(
-    (project) => filter === 'All work' || project.categories.includes(filter),
-  );
-  const visible = expanded ? filtered : filtered.slice(0, 6);
-  function toggleExpanded() {
-    if (expanded) {
-      setExpanded(false);
-      document.getElementById('project-filters').scrollIntoView({
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-          ? 'instant'
-          : 'smooth',
-      });
-    } else {
-      setExpanded(true);
-      requestAnimationFrame(() => firstExtra.current?.focus({ preventScroll: true }));
-    }
-  }
+  const [expanded, setExpanded] = useState(false);
+  const [filter, setFilter] = useState('All work');
+  const visible = projects.filter((p) => filter === 'All work' || p.categories.includes(filter));
   return (
-    <section id="projects" className="work-section section-container section-space">
-      <Reveal>
+    <>
+      <section className="manifesto">
         <div className="section-label">
-          <span>01 / SELECTED WORK</span>
-          <span>IDEAS INTO REALITY</span>
+          <span>THE IDEA IS JUST THE BEGINNING.</span>
+          <span>
+            KEEP GOING <ArrowDown size={14} />
+          </span>
         </div>
-        <div className="section-heading">
-          <h2>
-            A curious mind.
+        <p>
+          {'I connect intelligence, data & software to make the complicated feel effortless.'
+            .split(' ')
+            .map((word, i) => (
+              <span className="manifesto-word" key={i}>
+                {word}{' '}
+              </span>
+            ))}
+          <span className="manifesto-star" aria-hidden="true">
+            ✳
+          </span>
+        </p>
+        <div className="manifesto-bottom">
+          <span>
+            THOUGHTFULLY ENGINEERED.
             <br />
-            <span className="serif">A growing body of work.</span>
-          </h2>
-          <p>
-            From a first line of code to systems with purpose. A selection of things I’ve built,
-            explored, and learned from.
-          </p>
+            RELENTLESSLY CURIOUS.
+          </span>
+          <span>
+            From the first “what if”
+            <br />
+            to something that works.
+          </span>
         </div>
-      </Reveal>
-      <div className="work-toolbar" id="project-filters">
-        <div className="project-filters" role="group" aria-label="Filter projects">
-          {filters.map((item) => (
-            <button
-              key={item}
-              aria-pressed={filter === item}
-              className={filter === item ? 'selected' : ''}
-              onClick={() => {
-                setFilter(item);
-                setExpanded(false);
-              }}
+      </section>
+      <section id="projects" className="work-section section-container">
+        <Reveal>
+          <div className="section-label">
+            <span>01 / SELECTED EXPLORATIONS</span>
+            <span>IDEA → SYSTEM → EXPERIENCE</span>
+          </div>
+          <div className="work-heading">
+            <h2>
+              Proof of
+              <br />
+              <em>curiosity.</em>
+              <sup>(04)</sup>
+            </h2>
+            <p>
+              Real problems. Different disciplines.
+              <br />A few things I’ve helped bring to life.
+              <br />
+              <a href="#project-index" className="text-link">
+                See the full project index <ArrowDown size={15} />
+              </a>
+            </p>
+          </div>
+        </Reveal>
+        <div className="featured-stack">
+          {projects.slice(0, 4).map((project, i) => (
+            <article
+              className={`feature-card feature-${project.visual}`}
+              key={project.id}
+              style={{ '--card-index': i }}
             >
-              {item}
-              {filter === item && <span>{filtered.length.toString().padStart(2, '0')}</span>}
-            </button>
-          ))}
-        </div>
-        <span className="work-count" aria-live="polite">
-          {visible.length} of {filtered.length} projects
-        </span>
-      </div>
-      <div className="project-grid">
-        {visible.map((project, index) => (
-          <Reveal key={project.id} delay={(index % 2) * 0.07}>
-            <article className="project-card">
-              <div className={`project-preview color-${project.color}`}>
-                <div className="preview-top">
-                  <span>{project.type}</span>
-                  <span>{(projects.indexOf(project) + 1).toString().padStart(2, '0')}</span>
+              <div className="feature-surface">
+                <div className="feature-info">
+                  <div className="feature-top">
+                    <span>EXPLORATION / 0{i + 1}</span>
+                    <span>{project.role}</span>
+                  </div>
+                  <h3>{titles[i]}</h3>
+                  <p>{project.description}</p>
+                  <div className="tag-list">
+                    {project.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                  <button
+                    className="project-open"
+                    onClick={() => setSelected(project)}
+                    aria-label={`Explore ${project.title}`}
+                  >
+                    <span>{project.title}</span>
+                    <ArrowUpRight size={25} />
+                  </button>
                 </div>
-                <ProjectVisual kind={project.visual} />
-                <span className="visual-caption">PROJECT CONCEPT VISUAL</span>
-                <span className="project-open-icon">
-                  <ArrowUpRight size={21} />
-                </span>
-              </div>
-              <div className="project-info">
-                <div>
-                  <h3>
-                    <button
-                      ref={index === 6 ? firstExtra : null}
-                      onClick={() => setSelected(project)}
-                      aria-label={`Explore ${project.title}`}
-                    >
-                      {project.title}
-                    </button>
-                  </h3>
-                  <p>{project.subtitle}</p>
+                <div className="feature-art">
+                  <ProjectVisual kind={project.visual} />
+                  <span className="visual-caption">
+                    {project.title.toUpperCase()} / CONCEPT PREVIEW
+                  </span>
+                  <span className="art-number" aria-hidden="true">
+                    0{i + 1}
+                  </span>
                 </div>
-                <span className="project-role">
-                  {project.role.startsWith('Software development internship')
-                    ? 'Internship'
-                    : project.role}
-                </span>
-              </div>
-              <div className="tag-list">
-                {project.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
               </div>
             </article>
-          </Reveal>
-        ))}
-      </div>
-      {filtered.length > 6 && (
-        <div className="more-work">
-          <span>There’s more where that came from.</span>
-          <button
-            className="button button-outline"
-            onClick={toggleExpanded}
-            aria-expanded={expanded}
-          >
-            {expanded ? 'Show selected work' : `Explore all ${filtered.length} projects`}
-            {expanded ? <ArrowUp size={17} /> : <ArrowDown size={17} />}
-          </button>
+          ))}
         </div>
-      )}
-      <ProjectDialog project={selected} onClose={() => setSelected(null)} />
-    </section>
+        <div className="project-index" id="project-index">
+          <div className="index-heading">
+            <div>
+              <span className="eyebrow">THERE’S MORE WHERE THAT CAME FROM</span>
+              <h3>
+                The project index<span>({projects.length})</span>
+              </h3>
+            </div>
+            <button
+              className="index-toggle"
+              aria-expanded={expanded}
+              aria-controls="index-content"
+              onClick={() => setExpanded(!expanded)}
+            >
+              {expanded ? 'Close index' : `Explore all ${projects.length} projects`}
+              {expanded ? <Minus /> : <Plus />}
+            </button>
+          </div>
+          <div id="index-content" hidden={!expanded}>
+            <div className="project-filters" aria-label="Filter projects">
+              {filters.map((f) => (
+                <button key={f} aria-pressed={filter === f} onClick={() => setFilter(f)}>
+                  {f}
+                </button>
+              ))}
+              <span role="status">{visible.length} PROJECTS</span>
+            </div>
+            <div className="index-list">
+              {visible.map((project, i) => (
+                <button
+                  key={project.id}
+                  className="index-row"
+                  onClick={() => setSelected(project)}
+                  aria-label={`Read ${project.title}`}
+                >
+                  <span className="index-number">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="index-name">
+                    {project.title}
+                    <small>{project.subtitle}</small>
+                  </span>
+                  <span className="index-category">{project.categories.join(' / ')}</span>
+                  <ArrowUpRight size={24} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <ProjectDialog project={selected} onClose={() => setSelected(null)} />
+      </section>
+    </>
   );
 }

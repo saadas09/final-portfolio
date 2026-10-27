@@ -1,12 +1,12 @@
-import { MotionConfig } from 'framer-motion';
+import { MotionProvider } from './components/MotionProvider';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 export default function App() {
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionProvider>
       <MainLayout>
         <Home />
       </MainLayout>
-    </MotionConfig>
+    </MotionProvider>
   );
 }

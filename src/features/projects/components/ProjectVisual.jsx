@@ -2,114 +2,158 @@ import {
   ArrowUpRight,
   BookOpen,
   Check,
-  Cpu,
-  Database,
   FileText,
   Layers3,
-  Lightbulb,
   Search,
   Sparkles,
   Workflow,
+  Cpu,
 } from 'lucide-react';
-
 export default function ProjectVisual({ kind }) {
   return (
     <div className={`project-illustration illustration-${kind}`} aria-hidden="true">
-      {kind === 'matching' && (
-        <div className="match-composition">
-          <div className="match-heading">
-            Find your <span>next chapter.</span>
-            <ArrowUpRight size={28} />
+      {kind === 'matching' ? (
+        <div className="matching-art">
+          <div className="match-orbit orbit-a" />
+          <div className="match-orbit orbit-b" />
+          <div className="mini-window profile-window">
+            <div className="mini-window-bar">
+              <i />
+              <i />
+              <i />
+              <span>YOUR POTENTIAL</span>
+            </div>
+            <div className="profile-avatar">
+              S<span>✳</span>
+            </div>
+            <strong>
+              A skill set.
+              <br />A new direction.
+            </strong>
+            <div className="mini-tags">
+              <span>Python</span>
+              <span>React</span>
+              <span>AI</span>
+            </div>
           </div>
-          <div className="match-search">
-            <Search size={15} />
-            <span>Your skills. New possibilities.</span>
-            <span className="mini-enter">↗</span>
+          <div className="match-bridge">
+            <Sparkles size={25} />
           </div>
-          <div className="match-flow">
-            <span>YOUR PROFILE</span>
-            <i />
-            <Sparkles size={20} />
-            <i />
-            <span>YOUR NEXT ROLE</span>
-          </div>
-          <div className="match-pills">
-            <span>Python</span>
-            <span>Data engineering</span>
-            <span>Machine learning</span>
-          </div>
-          <div className="floating-note">
-            <span className="mini-dot" /> Skills, connected.
-          </div>
-        </div>
-      )}
-      {kind === 'learning' && (
-        <div className="learning-composition">
-          <div className="learning-heading">
-            <span className="learning-logo">
-              <Layers3 size={19} /> modis<span>learn</span>
-            </span>
-            <span>LEARNING, REIMAGINED</span>
-          </div>
-          <div className="learning-main">
-            <div>
-              <span className="mini-eyebrow">YOUR NEXT CHAPTER</span>
-              <h4>
-                Room to grow.
+          <div className="mini-window opportunity-window">
+            <div className="opportunity-heading">
+              <span className="opportunity-symbol">
+                <ArrowUpRight />
+              </span>
+              <span>
+                FINDURWAY
                 <br />
-                Skills to go further.
-              </h4>
-              <span className="mini-action">
-                Explore learning <ArrowUpRight size={13} />
+                <small>FIND YOUR NEXT CHAPTER</small>
               </span>
             </div>
-            <div className="learning-orbit">
-              <BookOpen size={31} strokeWidth={1.3} />
+            <div className="mock-search">
+              <Search size={14} /> A world of possibilities.
+            </div>
+            {['AI engineering', 'Data & cloud', 'Software development'].map((t, i) => (
+              <div className="opportunity-row" key={t}>
+                <span>0{i + 1}</span>
+                {t}
+                <ArrowUpRight size={14} />
+              </div>
+            ))}
+          </div>
+          <div className="floating-chip">
+            <span className="status-dot" /> CONNECTED BY MEANING
+          </div>
+        </div>
+      ) : kind === 'learning' ? (
+        <div className="learning-art">
+          <div className="learn-label">
+            <Layers3 size={23} /> modis<span>learn</span>
+          </div>
+          <div className="learning-platform">
+            <div className="platform-sidebar">
+              <i />
+              <i />
               <i />
               <i />
             </div>
+            <div className="platform-content">
+              <span className="mini-eyebrow">MAKE ROOM FOR GROWTH</span>
+              <h4>
+                What will you
+                <br />
+                learn next?
+              </h4>
+              <div className="course-tiles">
+                <div>
+                  <BookOpen />
+                  <span>Discover</span>
+                </div>
+                <div>
+                  <Workflow />
+                  <span>Practice</span>
+                </div>
+                <div>
+                  <Check />
+                  <span>Achieve</span>
+                </div>
+              </div>
+              <div className="lesson-lines">
+                <i />
+                <i />
+              </div>
+            </div>
           </div>
-          <div className="learning-steps">
-            <span>
-              <Check size={12} /> Learn
-            </span>
-            <i />
-            <span>
-              <Check size={12} /> Practice
-            </span>
-            <i />
-            <span>
-              <Check size={12} /> Achieve
-            </span>
+          <div className="certificate">
+            <span>✳</span>
+            <div>
+              ONE STEP FURTHER.<small>LEARNING THAT GOES SOMEWHERE.</small>
+            </div>
+            <Check size={20} />
           </div>
         </div>
-      )}
-      {kind === 'ocr' && (
-        <div className="ocr-composition">
-          <span className="mini-eyebrow">FROM IMAGE TO UNDERSTANDING</span>
+      ) : kind === 'ocr' ? (
+        <div className="ocr-art">
+          <div className="scan-coordinate">
+            INPUT_01.JPG <span>AR / MA</span>
+          </div>
           <div className="scan-frame">
             <span lang="ar" dir="rtl">
               مرحبا بالعالم
             </span>
             <i className="scan-line" />
-            <b className="scan-corner corner-one" />
-            <b className="scan-corner corner-two" />
+            <b className="corner tl" />
+            <b className="corner tr" />
+            <b className="corner bl" />
+            <b className="corner br" />
           </div>
-          <div className="ocr-result">
-            <span className="mini-dot" />
-            <span>Arabic & Moroccan Darija</span>
-            <span className="ocr-cursor">|</span>
+          <div className="ocr-path">
+            <span>IMAGE</span>
+            <i />
+            <Cpu size={25} />
+            <i />
+            <span>TEXT</span>
           </div>
-          <div className="visual-footnote">PREPROCESS → RECOGNIZE → EVALUATE</div>
+          <div className="recognized-text">
+            <span className="status-dot" />
+            <div>
+              Different script.
+              <br />
+              <strong>Same possibility.</strong>
+            </div>
+            <span className="text-cursor">▏</span>
+          </div>
+          <div className="ocr-metadata">
+            CRNN + BiLSTM + CTC <span>BUILT FOR DARIJA.</span>
+          </div>
         </div>
-      )}
-      {kind === 'rag' && (
-        <div className="rag-composition">
-          <div className="document-stack">
+      ) : kind === 'rag' ? (
+        <div className="rag-art">
+          <div className="rag-documents">
             <div />
             <div />
             <div>
-              <FileText size={26} strokeWidth={1.3} />
+              <FileText size={38} />
               <i />
               <i />
               <i />
@@ -118,80 +162,44 @@ export default function ProjectVisual({ kind }) {
           </div>
           <div className="rag-connector">
             <i />
-            <Sparkles size={20} />
+            <Sparkles size={24} />
             <i />
           </div>
-          <div className="answer-card">
-            <span className="mini-eyebrow">CONTEXT COMES FIRST</span>
+          <div className="answer-window">
+            <span className="mini-eyebrow">A LITTLE CONTEXT CHANGES EVERYTHING</span>
             <h4>
-              Ask better.
+              Good questions.
               <br />
-              Find meaning.
+              Grounded answers.
             </h4>
-            <div className="answer-line" />
-            <div className="answer-line short" />
-            <span>
-              <Check size={12} /> Grounded in your documents
-            </span>
+            <div className="answer-lines">
+              <i />
+              <i />
+              <i />
+            </div>
+            <div className="source-pill">
+              <FileText size={12} /> Connected to your documents
+            </div>
           </div>
         </div>
-      )}
-      {kind === 'hotel' && (
-        <div className="hotel-composition">
-          <span className="mini-eyebrow">EVERY DETAIL, CONNECTED</span>
+      ) : (
+        <div className="system-art">
+          <span className="system-orbit" />
+          <Workflow size={70} strokeWidth={1} />
           <h4>
-            Less friction.
-            <br />
-            <span>More flow.</span>
+            {kind === 'iot'
+              ? 'Small signal. Big connection.'
+              : kind === 'gan'
+                ? 'Learning to imagine.'
+                : 'Every detail, connected.'}
           </h4>
-          <div className="workflow-nodes">
-            <span>
-              <Layers3 size={22} />
-              <small>Organize</small>
-            </span>
+          <div className="system-nodes">
+            <span>INPUT</span>
             <i />
-            <span>
-              <Workflow size={22} />
-              <small>Connect</small>
-            </span>
+            <span>PROCESS</span>
             <i />
-            <span>
-              <Check size={22} />
-              <small>Simplify</small>
-            </span>
+            <span>IMPACT</span>
           </div>
-        </div>
-      )}
-      {kind === 'iot' && (
-        <div className="iot-composition">
-          <div className="iot-orbit">
-            <i />
-            <i />
-            <i />
-            <Lightbulb size={47} strokeWidth={1.1} />
-          </div>
-          <div className="iot-chip chip-one">
-            <Cpu size={15} /> DEVICE
-          </div>
-          <div className="iot-chip chip-two">
-            <Database size={15} /> CLOUD
-          </div>
-          <div className="iot-caption">
-            <span className="mini-dot" /> A small signal. A smarter system.
-          </div>
-        </div>
-      )}
-      {kind === 'gan' && (
-        <div className="gan-composition">
-          <span className="mini-eyebrow">THE ART OF LEARNING TO GENERATE</span>
-          <div className="digit-grid">
-            {'307215984'.split('').map((digit, index) => (
-              <span key={index} style={{ transform: `rotate(${index % 2 ? -8 : 6}deg)` }}>
-                {digit}
-              </span>
-            ))}
-          </div>
-          <div className="visual-footnote">GENERATOR ↔ DISCRIMINATOR</div>
         </div>
       )}
     </div>

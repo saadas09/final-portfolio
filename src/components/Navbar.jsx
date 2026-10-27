@@ -1,57 +1,56 @@
-import { useEffect, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, Menu, Pause, Play, X } from 'lucide-react';
+import { useMotion } from './MotionProvider';
 const links = [
   ['Work', 'projects'],
   ['Expertise', 'skills'],
   ['About', 'about'],
-  ['CV library', 'resumes'],
+  ['CVs', 'resumes'],
 ];
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState('');
+  const [scrolled, setScrolled] = useState(false);
+  const button = useRef(null);
+  const { enabled, toggle } = useMotion();
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: '-15% 0px -60% 0px' },
-    );
-    document.querySelectorAll('main > section[id]').forEach((section) => observer.observe(section));
-    const close = (event) => {
-      if (event.key === 'Escape') setOpen(false);
+    const scroll = () => setScrolled(window.scrollY > 40);
+    const key = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        if (open) button.current?.focus();
+      }
     };
-    window.addEventListener('keydown', close);
+    window.addEventListener('scroll', scroll, { passive: true });
+    window.addEventListener('keydown', key);
     return () => {
-      observer.disconnect();
-      window.removeEventListener('keydown', close);
+      window.removeEventListener('scroll', scroll);
+      window.removeEventListener('keydown', key);
     };
-  }, []);
+  }, [open]);
   return (
-    <header className="site-header">
+    <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="nav-shell">
         <a
-          className="wordmark"
           href="#hero"
+          className="wordmark"
           aria-label="Saad Abs, home"
           onClick={() => setOpen(false)}
         >
-          saad abs<span className="brand-dot">✳</span>
+          s<span className="logo-star">✳</span>a
+          <span className="wordmark-note">
+            SAAD ABS
+            <br />
+            ENGINEERING & EXPLORATION
+          </span>
         </a>
         <nav
-          className={open ? 'main-nav is-open' : 'main-nav'}
-          aria-label="Main navigation"
           id="main-navigation"
+          aria-label="Main navigation"
+          className={`main-nav ${open ? 'is-open' : ''}`}
         >
-          {links.map(([label, id]) => (
-            <a
-              href={`#${id}`}
-              key={id}
-              className={active === id ? 'active' : ''}
-              aria-current={active === id ? 'location' : undefined}
-              onClick={() => setOpen(false)}
-            >
+          {links.map(([label, id], i) => (
+            <a href={`#${id}`} key={id} onClick={() => setOpen(false)}>
+              <sup>0{i + 1}</sup>
               {label}
             </a>
           ))}
@@ -59,15 +58,27 @@ export default function Navbar() {
             Let’s talk <ArrowUpRight size={16} />
           </a>
         </nav>
-        <button
-          className="menu-toggle"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          aria-controls="main-navigation"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="nav-controls">
+          <button
+            className="motion-toggle"
+            onClick={toggle}
+            aria-label={enabled ? 'Pause animations' : 'Enable animations'}
+            title={enabled ? 'Pause animations' : 'Enable animations'}
+          >
+            {enabled ? <Pause size={14} /> : <Play size={14} />}
+            <span>MOTION {enabled ? 'ON' : 'OFF'}</span>
+          </button>
+          <button
+            ref={button}
+            className="menu-toggle"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="main-navigation"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
     </header>
   );
