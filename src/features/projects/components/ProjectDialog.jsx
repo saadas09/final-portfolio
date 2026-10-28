@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { ArrowUpRight, Github, X } from 'lucide-react';
-import ProjectVisual from './ProjectVisual';
+import ProjectEvidence from './ProjectEvidence';
+import CaseStudyDetails from './CaseStudyDetails';
 import { personal } from '../../../data/portfolioData';
 
 export default function ProjectDialog({ project, onClose }) {
@@ -41,8 +42,14 @@ export default function ProjectDialog({ project, onClose }) {
           </button>
         </div>
         <div className={`dialog-visual color-${project.color}`}>
-          <ProjectVisual kind={project.visual} />
-          <span className="visual-caption">PROJECT CONCEPT VISUAL</span>
+          <ProjectEvidence project={project} />
+          <span className="visual-caption">
+            {project.id === 'lms'
+              ? 'ACTUAL APPLICATION'
+              : project.id === 'darija'
+                ? 'ORIGINAL OCR INPUT SAMPLE'
+                : 'PROJECT CONCEPT VISUAL'}
+          </span>
         </div>
         <div className="dialog-content">
           <p className="eyebrow">{project.type}</p>
@@ -64,6 +71,7 @@ export default function ProjectDialog({ project, onClose }) {
               ))}
             </ul>
           </div>
+          <CaseStudyDetails key={project.id} project={project} />
           <div className="tag-list dialog-tags">
             {project.stack.map((tech) => (
               <span key={tech}>{tech}</span>

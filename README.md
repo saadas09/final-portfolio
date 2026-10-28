@@ -19,6 +19,8 @@ npm run preview
 ## Updating the portfolio
 
 - `src/data/portfolioData.js`: project case studies, verified source links, skills, contact details, and the four CV imports. Project counts are calculated automatically.
+- `src/data/caseStudies.js`: deeper engineering walkthroughs for FindUrWay, the LMS, and Darija OCR. Shareable URLs use `?project=findurway`, `?project=lms`, or `?project=darija`.
+- `public/projects/`: original project evidence. The LMS welcome/sign-in screenshots were captured from the existing local `LMS_project/frontend` application without authenticating. The OCR input is copied from `MoroccanDarijaOCR/images/test.png`; it is an input artifact, not model output. Concept illustrations remain explicitly labeled.
 - `src/features/hero/HeroSection.jsx`: the introduction and interactive discipline selector.
 - `src/components/ChromeSculpture.jsx`: the lazy-loaded WebGL sculpture, three forms, desktop mouse parallax, drag rotation, keyboard controls, and CSS fallback.
 - `src/components/ScrollEffects.jsx`: GSAP entrance effects, scroll-driven text, and layered project cards. Layout changes refresh scroll positions.
@@ -56,3 +58,5 @@ python scripts/check_portfolio.py https://abs-saad.netlify.app/
 The browser checks exercise all 14 project dialogs, filtering, focus restoration, keyboard controls, mobile navigation, four actual PDF downloads, copy email, 3D controls, animated layouts, the motion toggle, WebGL fallback, and text/viewport overflow at nine widths from 320 to 1920 pixels. Screenshots and the verification summary go to the git-ignored `.qa` directory.
 
 The site uses native scrolling. Sticky project layers are disabled on smaller screens and when motion is paused. The 3D renderer skips offscreen/hidden frames and does not continuously redraw when paused. Three.js is loaded separately from the initial application. Devices without WebGL retain a CSS sculpture and all portfolio content. Project artwork is labeled as concept previews.
+
+Expertise changes animate the panel and its contents with GSAP, including rapid switching and keyboard navigation. The selected discipline changes the panel accent. Pausing motion or requesting reduced motion makes the update immediate. `python scripts/check_enhancements.py` checks these transitions, direct case-study links, clipboard sharing, and evidence images.

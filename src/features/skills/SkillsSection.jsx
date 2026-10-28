@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { useMotion } from '../../components/MotionProvider';
 import { ArrowUpRight, BrainCircuit, Code2, Database } from 'lucide-react';
 import { expertise, projects } from '../../data/portfolioData';
 import Reveal from '../../components/Reveal';
@@ -7,6 +9,31 @@ const icons = [BrainCircuit, Database, Code2];
 export default function SkillsSection() {
   const [active, setActive] = useState(0);
   const [selected, setSelected] = useState(null);
+  const panel = useRef(null);
+  const { enabled } = useMotion();
+  useLayoutEffect(() => {
+    if (!enabled) return;
+    const ctx = gsap.context(() => {
+      gsap.set(panel.current, { opacity: 0.3, y: 24, scale: 0.96, rotateX: 5 });
+      gsap.set(panel.current.children, { opacity: 0, y: 14 });
+      gsap
+        .timeline()
+        .to(panel.current, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          duration: 0.65,
+          ease: 'back.out(1.2)',
+        })
+        .to(
+          panel.current.children,
+          { opacity: 1, y: 0, stagger: 0.045, duration: 0.45, ease: 'power3.out' },
+          0.12,
+        );
+    }, panel);
+    return () => ctx.revert();
+  }, [active, enabled]);
   const item = expertise[active];
   const Icon = icons[active];
   return (
@@ -80,6 +107,8 @@ export default function SkillsSection() {
             </span>
           </div>
           <div
+            ref={panel}
+            data-discipline={item.id}
             id="expertise-panel"
             className="expertise-panel"
             role="tabpanel"

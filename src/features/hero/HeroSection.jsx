@@ -61,8 +61,8 @@ export default function HeroSection() {
       </h1>
       <div className="hero-bottom hero-enter">
         <p>
-          Engineering student turning complex problems
-          <br className="desktop-break" /> into useful experiences. A little obsessed with both.
+          From Moroccan Darija to connected data, I build
+          <br className="desktop-break" /> AI and software around real human problems.
         </p>
         <div className="hero-modes" aria-label="Choose a sculpture">
           <span className="mono">CHANGE THE PERSPECTIVE</span>

@@ -46,6 +46,14 @@ export default function AboutSection() {
               <br />
               close<span>.</span>
             </h2>
+            <div className="identity-coordinates">
+              <span>34° N / 04° W</span>
+              <strong>
+                SEFROU →<br />
+                WHAT’S NEXT
+              </strong>
+              <small>MOROCCAN ROOTS. CURIOUS MIND.</small>
+            </div>
             <div className="about-stamp">
               <span>
                 CURIOUS

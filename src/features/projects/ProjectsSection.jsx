@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowDown, ArrowUpRight, Plus, Minus } from 'lucide-react';
 import { projects, filters } from '../../data/portfolioData';
-import ProjectVisual from './components/ProjectVisual';
+import ProjectEvidence from './components/ProjectEvidence';
 import ProjectDialog from './components/ProjectDialog';
 import Reveal from '../../components/Reveal';
 const titles = [
@@ -27,7 +27,11 @@ const titles = [
   </>,
 ];
 export default function ProjectsSection() {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(
+    () =>
+      projects.find((p) => p.id === new URLSearchParams(window.location.search).get('project')) ||
+      null,
+  );
   const [expanded, setExpanded] = useState(false);
   const [filter, setFilter] = useState('All work');
   const visible = projects.filter((p) => filter === 'All work' || p.categories.includes(filter));
@@ -118,9 +122,13 @@ export default function ProjectsSection() {
                   </button>
                 </div>
                 <div className="feature-art">
-                  <ProjectVisual kind={project.visual} />
+                  <ProjectEvidence project={project} />
                   <span className="visual-caption">
-                    {project.title.toUpperCase()} / CONCEPT PREVIEW
+                    {project.id === 'lms'
+                      ? 'ORIGINAL APPLICATION / LOCAL CAPTURE'
+                      : project.id === 'darija'
+                        ? 'ORIGINAL OCR INPUT / REPOSITORY ARTIFACT'
+                        : `${project.title.toUpperCase()} / CONCEPT PREVIEW`}
                   </span>
                   <span className="art-number" aria-hidden="true">
                     0{i + 1}
@@ -177,7 +185,17 @@ export default function ProjectsSection() {
             </div>
           </div>
         </div>
-        <ProjectDialog project={selected} onClose={() => setSelected(null)} />
+        <ProjectDialog
+          project={selected}
+          onClose={() => {
+            setSelected(null);
+            if (new URLSearchParams(window.location.search).has('project')) {
+              const url = new URL(window.location.href);
+              url.searchParams.delete('project');
+              window.history.replaceState({}, '', url);
+            }
+          }}
+        />
       </section>
     </>
   );
