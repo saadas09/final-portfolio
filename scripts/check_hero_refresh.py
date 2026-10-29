@@ -22,7 +22,8 @@ with sync_playwright() as p:
   page.screenshot(path=str(r/f'hero-refresh-{width}.png'))
  expect(page.get_by_text('AI-GENERATED CONCEPT ART',exact=False)).to_have_count(0)
  for img in page.locator('.art-gallery .generated-cover img').all():
-  img.scroll_into_view_if_needed();expect(img).to_be_visible();assert img.evaluate('(e)=>e.complete&&e.naturalWidth>0')
+  img.scroll_into_view_if_needed();expect(img).to_be_visible()
+  page.wait_for_function('(e)=>e.complete&&e.naturalWidth>0',arg=img.element_handle())
  page.locator('.art-gallery').evaluate('(e)=>scrollTo({top:e.offsetTop-100,behavior:"instant"})')
  page.screenshot(path=str(r/'product-gallery.png'))
  assert not errors,errors
