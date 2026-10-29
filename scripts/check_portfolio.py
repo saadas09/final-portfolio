@@ -135,7 +135,7 @@ with sync_playwright() as p:
     page.get_by_role('button',name='Pause animations',exact=True).click()
     expect(page.locator('html')).to_have_attribute('data-motion','off')
     assert page.locator('.feature-card').first.evaluate('(e)=>getComputedStyle(e).position')=='relative'
-    assert page.locator('.manifesto-star').evaluate('(e)=>getComputedStyle(e).animationPlayState')=='paused'
+    assert page.locator('.skills-star').evaluate('(e)=>getComputedStyle(e).animationPlayState')=='paused'
     # WebGL failure retains an illustration and all portfolio content.
     fallback=context.new_page()
     fallback.add_init_script('''const getContext=HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext=function(type,...args){if(type.includes('webgl'))return null;return getContext.call(this,type,...args);};''')

@@ -8,6 +8,7 @@ const journey = [
     description:
       'Built an employee learning platform with five user roles, courses, quizzes, certificates, and centralized progress reporting.',
     label: 'INDUSTRY',
+    project: 'lms',
   },
   {
     date: 'JUL — AUG 2025',
@@ -16,6 +17,7 @@ const journey = [
     description:
       'Developed a document-readiness tracking platform, bringing statuses, pending work, and staff follow-up into one place.',
     label: 'INDUSTRY',
+    project: 'savoirexpert',
   },
   {
     date: '2022 — 2027 · EXPECTED',
@@ -28,73 +30,26 @@ const journey = [
 ];
 export default function AboutSection() {
   return (
-    <section id="about" className="about-section section-container">
+    <section
+      id="experience"
+      className="experience-section section-container"
+      aria-labelledby="experience-title"
+    >
       <Reveal>
         <div className="section-label">
-          <span>03 / THE HUMAN IN THE LOOP</span>
-          <span>SEFROU, MOROCCO ↗</span>
+          <span>03 / EXPERIENCE & EDUCATION</span>
+          <span>LEARNING BY BUILDING.</span>
         </div>
-        <div className="about-layout">
-          <div className="about-type">
-            <span className="eyebrow">HI, I’M SAAD.</span>
-            <h2>
-              Not done
-              <br />
-              <em>learning.</em>
-              <br />
-              Not even
-              <br />
-              close<span>.</span>
-            </h2>
-            <div className="identity-coordinates">
-              <span>34° N / 04° W</span>
-              <strong>
-                SEFROU →<br />
-                WHAT’S NEXT
-              </strong>
-              <small>MOROCCAN ROOTS. CURIOUS MIND.</small>
-            </div>
-            <div className="about-stamp">
-              <span>
-                CURIOUS
-                <br />
-                BY DEFAULT
-              </span>
-              <span>✳</span>
-            </div>
-          </div>
-          <div className="about-story">
-            <p className="about-lead">
-              I like the moment when
-              <br />
-              “what if?” becomes
-              <br />
-              “it works.”
-            </p>
-            <p>
-              I’m a final-year engineering student at ENSAH, studying Digital Transformation and
-              Artificial Intelligence. I’m drawn to the space between a real problem and something
-              people can actually use.
-            </p>
-            <p>
-              That’s taken me from recognizing Moroccan Darija to building learning platforms,
-              connecting job data, and experimenting with cloud-connected devices. Different
-              challenges. The same urge to figure things out.
-            </p>
-            <div className="about-facts">
-              <div>
-                <span>NEXT CHAPTER</span>
-                <strong>A PFE engineering internship</strong>
-              </div>
-              <div>
-                <span>LET’S TALK IN</span>
-                <strong>Arabic · English C1 · French B2</strong>
-              </div>
-            </div>
-            <a className="text-link" href="#contact">
-              Have something in mind? <ArrowUpRight size={18} />
-            </a>
-          </div>
+        <div className="experience-heading">
+          <h2 id="experience-title">
+            From the classroom.
+            <br />
+            <em>Into the real world.</em>
+          </h2>
+          <p>
+            Two internships, a growing body of projects, and an engineering degree in progress.
+            Here’s where I’ve put the learning to work.
+          </p>
         </div>
       </Reveal>
       <div className="journey">
@@ -111,7 +66,21 @@ export default function AboutSection() {
                 <h3>{step.name}</h3>
                 <p>{step.title}</p>
               </div>
-              <p className="journey-description">{step.description}</p>
+              <div className="journey-description">
+                <p>{step.description}</p>
+                {step.project && (
+                  <button
+                    className="text-link"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent('portfolio:open-project', { detail: step.project }),
+                      )
+                    }
+                  >
+                    Explore the project <ArrowUpRight size={15} />
+                  </button>
+                )}
+              </div>
               <span className="journey-badge">{step.label}</span>
             </article>
           </Reveal>

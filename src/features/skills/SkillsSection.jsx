@@ -41,7 +41,7 @@ export default function SkillsSection() {
       <div className="section-container">
         <Reveal>
           <div className="section-label">
-            <span>02 / DIFFERENT TOOLS. ONE MINDSET.</span>
+            <span>04 / SKILLS & EXPERTISE</span>
             <span>CONNECT THE DOTS.</span>
           </div>
           <div className="skills-heading">

@@ -21,16 +21,6 @@ export default function ScrollEffects() {
           },
         );
       });
-      gsap.fromTo(
-        '.manifesto-word',
-        { opacity: 0.22 },
-        {
-          opacity: 1,
-          stagger: 0.12,
-          ease: 'none',
-          scrollTrigger: { trigger: '.manifesto', start: 'top 75%', end: 'bottom 70%', scrub: 1 },
-        },
-      );
       gsap.to('.hero-name', {
         yPercent: 35,
         opacity: 0.15,

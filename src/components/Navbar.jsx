@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Menu, Pause, Play, X } from 'lucide-react';
 import { useMotion } from './MotionProvider';
 const links = [
-  ['Work', 'projects'],
-  ['Expertise', 'skills'],
   ['About', 'about'],
+  ['Work', 'projects'],
+  ['Experience', 'experience'],
+  ['Expertise', 'skills'],
   ['CVs', 'resumes'],
 ];
 export default function Navbar() {

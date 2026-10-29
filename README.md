@@ -57,7 +57,11 @@ python scripts/check_portfolio.py https://abs-saad.netlify.app/
 
 The browser checks exercise all 14 project dialogs, filtering, focus restoration, keyboard controls, mobile navigation, four actual PDF downloads, copy email, 3D controls, animated layouts, the motion toggle, WebGL fallback, and text/viewport overflow at nine widths from 320 to 1920 pixels. Screenshots and the verification summary go to the git-ignored `.qa` directory.
 
-The site uses native scrolling and a staggered project gallery with scroll reveals. The 3D renderer skips offscreen/hidden frames and does not continuously redraw when paused. Three.js is loaded separately from the initial application. Devices without WebGL retain a CSS sculpture and all portfolio content. Project covers illustrate the product workflow; real evidence remains in the case studies.
+The page introduces Saad before the selected work, followed by experience, expertise, CVs and contact. The featured projects use native scrolling with sticky cards and reversible depth transitions; reduced-motion mode displays a regular list. Each featured project names Saad’s contribution, and internship entries link directly to their case studies.
+
+Three.js loads after the initial paint during an idle callback. Its animation loop stops offscreen, in hidden tabs, and when motion is paused. Small screens and devices reporting four or fewer CPU cores use lighter geometry and a 30 fps rendering cap. Data-saver and 2G connections skip the renderer entirely. Devices without WebGL retain a CSS sculpture and all portfolio content. Detailed project dialogs load on demand. Fonts are served locally with swap rendering; their SIL Open Font Licenses are in `public/fonts/`. The font files came from the Google Fonts CSS API and the licenses from the official `google/fonts` repository.
+
+Run `python scripts/check_project_stack.py` for stacking, focus access, and motion preference checks. Run a production preview on port 4173, then `python scripts/check_personal_portfolio.py` to verify personal context, experience links, deferred dialog loading, stopped/resumed WebGL drawing, data-saver behavior, and responsive layouts. These are browser checks, not field performance scores. Project covers illustrate the product workflow; real evidence remains in the case studies.
 
 `public/projects/art/*-product.webp` contains four optimized product-interface illustrations. Current prompts and provenance are in `docs/product-artwork.md`. The earlier abstract cover prompts are archived in `docs/artwork.md`.
 

@@ -7,7 +7,7 @@ export default function ResumeSection() {
       <div className="section-container">
         <Reveal>
           <div className="section-label">
-            <span>04 / TAKE A CLOSER LOOK</span>
+            <span>05 / MY CVS</span>
             <span>FOUR PERSPECTIVES. SAME SAAD.</span>
           </div>
           <div className="resume-heading">

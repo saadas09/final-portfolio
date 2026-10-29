@@ -32,7 +32,7 @@ export default function HeroSection() {
           <span className="mono hero-edition">BASED IN MOROCCO · BUILT FOR WHAT’S NEXT</span>
         </div>
         <div className="hero-intro hero-enter">
-          <span className="eyebrow">ENGINEERING STUDENT / ENSAH</span>
+          <span className="eyebrow">SAAD ABS / FINAL-YEAR ENGINEERING STUDENT</span>
           <p>
             Human problems.
             <br />
@@ -85,8 +85,8 @@ export default function HeroSection() {
         </h1>
         <div className="hero-bottom hero-enter">
           <p>
-            From Moroccan Darija to connected data, I build
-            <br className="desktop-break" /> AI and software around real human problems.
+            I’m Saad, an AI & software engineering student in Morocco.
+            <br className="desktop-break" /> Here’s what I’m building, learning, and working toward.
           </p>
           <div className="hero-modes" aria-label="Choose a sculpture">
             <span className="mono">CHANGE THE PERSPECTIVE</span>

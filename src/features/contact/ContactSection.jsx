@@ -21,7 +21,7 @@ export default function ContactSection() {
       <div className="section-container">
         <Reveal>
           <div className="section-label">
-            <span>05 / GREAT THINGS START SOMEWHERE.</span>
+            <span>06 / GET IN TOUCH</span>
             <span>
               <i className="status-dot" /> OPEN TO OPPORTUNITIES
             </span>

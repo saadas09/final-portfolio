@@ -1,3 +1,4 @@
+@import './fonts.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -4464,6 +4465,21 @@ html[data-motion='off'] .feature-card {
   max-width: 100%;
   font-size: 13px;
 }
+.feature-credit {
+  margin-top: 18px;
+  padding-left: 12px;
+  border-left: 2px solid var(--lime);
+}
+.feature-credit > span {
+  font: 8px var(--mono);
+  color: var(--lime);
+}
+.feature-credit p {
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--paper);
+}
 .art-gallery .tag-list {
   margin: 20px 0 25px;
 }
@@ -4827,6 +4843,9 @@ html[data-motion='off'] .stack-intro > span:last-child {
 /* A clearer introduction, with a visual path into the work. */
 .hero-refined {
   background: radial-gradient(ellipse at 66% 38%, #39472a70, transparent 43%);
+}
+.hero:has(.sculpture:not(.is-ready)) .drag-note {
+  visibility: hidden;
 }
 .hero-refined .hero-intro {
   top: 22%;
@@ -5346,5 +5365,201 @@ html[data-motion='off'] .stack-intro > span:last-child {
   .hero-refined .sculpture {
     top: 40%;
     height: 25%;
+  }
+}
+/* Personal context, before the project gallery. */
+.profile-section {
+  padding-block: 90px 80px;
+}
+.profile-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(36px, 7vw, 110px);
+  padding-block: 60px 45px;
+}
+.profile-heading h2 {
+  font-size: clamp(38px, 4.5vw, 66px);
+  line-height: 1.08;
+  margin-top: 24px;
+}
+.profile-heading h2 em {
+  color: var(--violet);
+}
+.profile-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+.profile-socials a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-size: 12px;
+}
+.profile-socials a:hover {
+  color: var(--lime);
+  border-color: var(--lime);
+}
+.profile-story > p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.profile-story .profile-lead {
+  font-size: clamp(21px, 2vw, 28px);
+  line-height: 1.5;
+  color: var(--paper);
+  letter-spacing: -0.025em;
+}
+.profile-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  margin-top: 28px;
+  padding-top: 26px;
+}
+.profile-facts dt {
+  color: var(--muted);
+  font: 8px var(--mono);
+  margin-bottom: 8px;
+}
+.profile-facts dd {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.profile-story .text-link {
+  margin-top: 28px;
+}
+.profile-note {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid #ceff7926;
+  background: #ceff7906;
+  padding: 22px 26px;
+  border-radius: 12px;
+}
+.profile-note p {
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 660px;
+  color: #c3ccb7;
+}
+.profile-note a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  margin-left: auto;
+  color: var(--lime);
+  font-size: 12px;
+}
+.experience-section {
+  padding-block: 100px;
+}
+.experience-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 36px;
+  margin-block: 45px 55px;
+}
+.experience-heading h2 {
+  font-size: clamp(36px, 5vw, 70px);
+}
+.experience-heading > p {
+  max-width: 310px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.experience-section .journey {
+  margin-top: 0;
+}
+.journey-description .text-link {
+  color: var(--lime);
+  font-size: 12px;
+  margin-top: 12px;
+}
+.project-loading {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--ink);
+  border-radius: 12px;
+  font-size: 14px;
+}
+.project-loading button {
+  color: var(--lime);
+}
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .profile-heading h2 {
+    font-size: clamp(38px, 6vw, 58px);
+  }
+  .experience-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .experience-heading > p {
+    max-width: 560px;
+  }
+}
+@media (max-width: 650px) {
+  .profile-section {
+    padding-block: 55px;
+  }
+  .profile-layout {
+    padding-block: 36px;
+  }
+  .profile-heading h2 {
+    font-size: clamp(32px, 8vw, 46px);
+  }
+  .profile-story > p {
+    font-size: 14px;
+  }
+  .profile-story .profile-lead {
+    font-size: 21px;
+  }
+  .profile-facts {
+    gap: 20px 15px;
+  }
+  .profile-facts dd {
+    font-size: 12px;
+  }
+  .profile-note {
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 12px;
+  }
+  .profile-note p {
+    flex: 1;
+    min-width: 180px;
+  }
+  .profile-note a {
+    margin-left: 18px;
+  }
+  .experience-section {
+    padding-block: 60px;
+  }
+  .experience-heading h2 {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+  .feature-credit p {
+    font-size: 11px;
   }
 }
