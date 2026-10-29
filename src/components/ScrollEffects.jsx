@@ -37,23 +37,6 @@ export default function ScrollEffects() {
         ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
       });
-      const mm = gsap.matchMedia();
-      mm.add('(min-width: 901px)', () => {
-        const cards = gsap.utils.toArray('.feature-card');
-        cards.slice(0, -1).forEach((card, i) =>
-          gsap.to(card.querySelector('.feature-surface'), {
-            scale: 0.94,
-            filter: 'brightness(0.65)',
-            ease: 'none',
-            scrollTrigger: {
-              trigger: cards[i + 1],
-              start: 'top 75%',
-              end: 'top 125px',
-              scrub: true,
-            },
-          }),
-        );
-      });
     });
     let live = true;
     let frame;

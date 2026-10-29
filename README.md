@@ -57,6 +57,10 @@ python scripts/check_portfolio.py https://abs-saad.netlify.app/
 
 The browser checks exercise all 14 project dialogs, filtering, focus restoration, keyboard controls, mobile navigation, four actual PDF downloads, copy email, 3D controls, animated layouts, the motion toggle, WebGL fallback, and text/viewport overflow at nine widths from 320 to 1920 pixels. Screenshots and the verification summary go to the git-ignored `.qa` directory.
 
-The site uses native scrolling. Sticky project layers are disabled on smaller screens and when motion is paused. The 3D renderer skips offscreen/hidden frames and does not continuously redraw when paused. Three.js is loaded separately from the initial application. Devices without WebGL retain a CSS sculpture and all portfolio content. Project artwork is labeled as concept previews.
+The site uses native scrolling and a staggered project gallery with scroll reveals. The 3D renderer skips offscreen/hidden frames and does not continuously redraw when paused. Three.js is loaded separately from the initial application. Devices without WebGL retain a CSS sculpture and all portfolio content. Generated project covers are labeled as concept art; real evidence remains in the case studies.
+
+`public/projects/art/` contains four optimized WebP artworks generated with the built-in image tool. The complete prompt set is in `docs/artwork.md`.
+
+`ProjectExplorer.jsx` adds technology search, category filters, random discovery, local bookmarks, comparison, and copyable shortlists. Bookmarks use the `saad-project-shortlist` localStorage key and fall back to in-memory state when storage is unavailable. Run `python scripts/check_gallery.py` to verify these flows.
 
 Expertise changes animate the panel and its contents with GSAP, including rapid switching and keyboard navigation. The selected discipline changes the panel accent. Pausing motion or requesting reduced motion makes the update immediate. `python scripts/check_enhancements.py` checks these transitions, direct case-study links, clipboard sharing, and evidence images.

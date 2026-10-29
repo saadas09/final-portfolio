@@ -44,11 +44,9 @@ export default function ProjectDialog({ project, onClose }) {
         <div className={`dialog-visual color-${project.color}`}>
           <ProjectEvidence project={project} />
           <span className="visual-caption">
-            {project.id === 'lms'
-              ? 'ACTUAL APPLICATION'
-              : project.id === 'darija'
-                ? 'ORIGINAL OCR INPUT SAMPLE'
-                : 'PROJECT CONCEPT VISUAL'}
+            {['findurway', 'lms', 'darija', 'rag'].includes(project.id)
+              ? 'AI-GENERATED CONCEPT ART'
+              : 'PROJECT CONCEPT VISUAL'}
           </span>
         </div>
         <div className="dialog-content">

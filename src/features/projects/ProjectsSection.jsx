@@ -1,30 +1,15 @@
-import { useState } from 'react';
-import { ArrowDown, ArrowUpRight, Plus, Minus } from 'lucide-react';
-import { projects, filters } from '../../data/portfolioData';
+import { useState, useEffect } from 'react';
+import { ArrowDown, ArrowUpRight, Plus, Minus, Bookmark } from 'lucide-react';
+import { projects } from '../../data/portfolioData';
 import ProjectEvidence from './components/ProjectEvidence';
 import ProjectDialog from './components/ProjectDialog';
 import Reveal from '../../components/Reveal';
+import ProjectExplorer from './components/ProjectExplorer';
 const titles = [
-  <>
-    Opportunity.
-    <br />
-    Reimagined.
-  </>,
-  <>
-    Learning.
-    <br />
-    Without limits.
-  </>,
-  <>
-    Our language.
-    <br />
-    Machine readable.
-  </>,
-  <>
-    Knowledge.
-    <br />
-    In conversation.
-  </>,
+  'Opportunity, reimagined.',
+  'Learning without limits.',
+  'Our language, machine readable.',
+  'Knowledge in conversation.',
 ];
 export default function ProjectsSection() {
   const [selected, setSelected] = useState(
@@ -33,8 +18,25 @@ export default function ProjectsSection() {
       null,
   );
   const [expanded, setExpanded] = useState(false);
-  const [filter, setFilter] = useState('All work');
-  const visible = projects.filter((p) => filter === 'All work' || p.categories.includes(filter));
+  const [saved, setSaved] = useState(() => {
+    try {
+      const value = JSON.parse(localStorage.getItem('saad-project-shortlist') || '[]');
+      return Array.isArray(value)
+        ? value.filter((id) => projects.some((p) => p.id === id)).slice(0, 14)
+        : [];
+    } catch {
+      return [];
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem('saad-project-shortlist', JSON.stringify(saved));
+    } catch {
+      /* Saving remains available for this visit. */
+    }
+  }, [saved]);
+  const toggleSave = (id) =>
+    setSaved((list) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id]));
   return (
     <>
       <section className="manifesto">
@@ -92,12 +94,13 @@ export default function ProjectsSection() {
             </p>
           </div>
         </Reveal>
-        <div className="featured-stack">
+        <div className="featured-stack art-gallery">
           {projects.slice(0, 4).map((project, i) => (
             <article
               className={`feature-card feature-${project.visual}`}
               key={project.id}
               style={{ '--card-index': i }}
+              data-reveal
             >
               <div className="feature-surface">
                 <div className="feature-info">
@@ -123,13 +126,19 @@ export default function ProjectsSection() {
                 </div>
                 <div className="feature-art">
                   <ProjectEvidence project={project} />
-                  <span className="visual-caption">
-                    {project.id === 'lms'
-                      ? 'ORIGINAL APPLICATION / LOCAL CAPTURE'
-                      : project.id === 'darija'
-                        ? 'ORIGINAL OCR INPUT / REPOSITORY ARTIFACT'
-                        : `${project.title.toUpperCase()} / CONCEPT PREVIEW`}
-                  </span>
+                  <span className="visual-caption">AI-GENERATED CONCEPT ART / 0{i + 1}</span>
+                  <button
+                    className="art-bookmark"
+                    aria-label={`${saved.includes(project.id) ? 'Unsave' : 'Save'} featured ${project.title}`}
+                    aria-pressed={saved.includes(project.id)}
+                    onClick={() => toggleSave(project.id)}
+                  >
+                    <Bookmark
+                      size={18}
+                      fill={saved.includes(project.id) ? 'currentColor' : 'none'}
+                    />
+                    <span>{saved.includes(project.id) ? 'Saved' : 'Save'}</span>
+                  </button>
                   <span className="art-number" aria-hidden="true">
                     0{i + 1}
                   </span>
@@ -138,6 +147,17 @@ export default function ProjectsSection() {
             </article>
           ))}
         </div>
+        {saved.length > 0 && (
+          <button
+            className="collection-shortcut"
+            onClick={() => {
+              setExpanded(true);
+              document.getElementById('project-index').scrollIntoView();
+            }}
+          >
+            <Bookmark size={16} /> Your collection ({saved.length}) <span>Compare & explore ↗</span>
+          </button>
+        )}
         <div className="project-index" id="project-index">
           <div className="index-heading">
             <div>
@@ -157,32 +177,7 @@ export default function ProjectsSection() {
             </button>
           </div>
           <div id="index-content" hidden={!expanded}>
-            <div className="project-filters" aria-label="Filter projects">
-              {filters.map((f) => (
-                <button key={f} aria-pressed={filter === f} onClick={() => setFilter(f)}>
-                  {f}
-                </button>
-              ))}
-              <span role="status">{visible.length} PROJECTS</span>
-            </div>
-            <div className="index-list">
-              {visible.map((project, i) => (
-                <button
-                  key={project.id}
-                  className="index-row"
-                  onClick={() => setSelected(project)}
-                  aria-label={`Read ${project.title}`}
-                >
-                  <span className="index-number">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="index-name">
-                    {project.title}
-                    <small>{project.subtitle}</small>
-                  </span>
-                  <span className="index-category">{project.categories.join(' / ')}</span>
-                  <ArrowUpRight size={24} />
-                </button>
-              ))}
-            </div>
+            <ProjectExplorer saved={saved} toggleSave={toggleSave} onOpen={setSelected} />
           </div>
         </div>
         <ProjectDialog
