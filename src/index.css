@@ -1433,6 +1433,7 @@ em {
 }
 /* The toolkit shifts from overview to evidence. */
 .expertise-section {
+  overflow: clip;
   background: #22271e;
   padding: 80px 0 100px;
   border-block: 1px solid var(--line);
@@ -4357,33 +4358,60 @@ html[data-motion='off'] .feature-card {
   margin-left: auto;
   font-size: 11px;
 }
+.stack-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  color: var(--muted);
+  font: 9px var(--mono);
+  letter-spacing: 0.05em;
+}
+.stack-intro > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--lime);
+}
 .art-gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 36px 28px;
-  padding-bottom: 35px;
+  display: block;
+  padding-bottom: 0;
+  isolation: isolate;
+}
+.stack-anchor {
+  display: block;
+  height: 0;
+  pointer-events: none;
 }
 .art-gallery .feature-card {
-  position: relative;
-  top: auto;
+  position: sticky;
+  top: var(--stack-top, 104px);
+  z-index: calc(var(--card-index) + 1);
   padding: 0;
   min-width: 0;
   perspective: none;
+  margin: 0 0 clamp(70px, 16vh, 180px);
+}
+.art-gallery .feature-card:last-child {
+  margin-bottom: 0;
 }
 .art-gallery .feature-surface {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  border-radius: 14px;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  min-height: 530px;
+  border-radius: 18px;
   background: #20251d;
-  box-shadow: none;
-  border: 1px solid #ffffff16;
+  box-shadow: 0 -12px 60px #0004;
+  border: 1px solid #ffffff25;
   overflow: hidden;
+  transform-origin: center top;
 }
 .art-gallery .feature-art {
-  order: 0;
+  order: 1;
   height: auto;
-  aspect-ratio: 3/2;
+  min-height: 0;
+  min-width: 0;
+  aspect-ratio: auto;
   padding: 0;
   background: #253325;
   display: block;
@@ -4405,11 +4433,11 @@ html[data-motion='off'] .feature-card {
   transform: scale(1.05);
 }
 .art-gallery .feature-info {
-  order: 1;
+  order: 0;
   background: #20251d;
   color: var(--paper);
-  padding: 28px 30px;
-  min-height: 365px;
+  padding: clamp(26px, 3vw, 46px);
+  min-height: 0;
 }
 .art-gallery .feature-top {
   padding-bottom: 0;
@@ -4421,9 +4449,9 @@ html[data-motion='off'] .feature-card {
   font-size: 6px;
 }
 .art-gallery .feature-info h3 {
-  font-size: clamp(32px, 3.5vw, 52px);
+  font-size: clamp(36px, 4vw, 60px);
   line-height: 1.08;
-  margin: 25px 0 18px;
+  margin: 38px 0 22px;
 }
 .art-gallery .feature-info h3 br {
   display: none;
@@ -4482,11 +4510,13 @@ html[data-motion='off'] .feature-card {
   background: var(--lime);
   color: var(--ink);
 }
-.art-gallery .feature-card:nth-child(even) {
-  margin-top: 70px;
+html[data-motion='off'] .art-gallery .feature-card {
+  position: relative;
+  top: auto;
+  margin-bottom: 32px;
 }
-.art-gallery .feature-card:nth-child(odd) {
-  margin-bottom: 70px;
+html[data-motion='off'] .stack-intro > span:last-child {
+  visibility: hidden;
 }
 .dialog-visual:has(.generated-cover) {
   height: 350px;
@@ -4684,24 +4714,14 @@ html[data-motion='off'] .feature-card {
   max-width: 400px;
 }
 @media (max-width: 900px) {
-  .art-gallery {
-    gap: 25px 18px;
-  }
   .art-gallery .feature-info {
     padding: 23px;
-    min-height: 390px;
   }
   .art-gallery .feature-info h3 {
     font-size: 32px;
   }
   .art-gallery .feature-top {
     flex-wrap: wrap;
-  }
-  .art-gallery .feature-card:nth-child(even) {
-    margin-top: 40px;
-  }
-  .art-gallery .feature-card:nth-child(odd) {
-    margin-bottom: 40px;
   }
   .comparison-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4714,20 +4734,30 @@ html[data-motion='off'] .feature-card {
   }
 }
 @media (max-width: 650px) {
-  .art-gallery {
-    grid-template-columns: 1fr;
-    gap: 25px;
+  .stack-intro {
+    font-size: 7px;
   }
-  .art-gallery .feature-card:nth-child(n) {
-    margin: 0;
+  .stack-intro > span:first-child {
+    max-width: 110px;
+    line-height: 1.5;
+  }
+  .art-gallery .feature-surface {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    border-radius: 12px;
+  }
+  .art-gallery .feature-art {
+    order: 0;
+    height: clamp(180px, 28svh, 260px);
   }
   .art-gallery .feature-info {
-    padding: 24px;
+    order: 1;
+    padding: 22px;
     min-height: 0;
   }
   .art-gallery .feature-info h3 {
-    font-size: 36px;
-    margin: 22px 0 17px;
+    font-size: clamp(28px, 8vw, 36px);
+    margin: 18px 0 14px;
   }
   .art-gallery .feature-top {
     font-size: 7px;

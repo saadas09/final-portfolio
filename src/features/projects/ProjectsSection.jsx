@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect, useRef } from 'react';
 import { ArrowDown, ArrowUpRight, Plus, Minus, Bookmark } from 'lucide-react';
 import { projects } from '../../data/portfolioData';
 import ProjectEvidence from './components/ProjectEvidence';
 import ProjectDialog from './components/ProjectDialog';
 import Reveal from '../../components/Reveal';
 import ProjectExplorer from './components/ProjectExplorer';
+import useProjectStack from './useProjectStack';
 const titles = [
   'Opportunity, reimagined.',
   'Learning without limits.',
@@ -12,6 +13,8 @@ const titles = [
   'Knowledge in conversation.',
 ];
 export default function ProjectsSection() {
+  const stackRef = useRef(null);
+  useProjectStack(stackRef);
   const [selected, setSelected] = useState(
     () =>
       projects.find((p) => p.id === new URLSearchParams(window.location.search).get('project')) ||
@@ -102,57 +105,64 @@ export default function ProjectsSection() {
             </p>
           </div>
         </Reveal>
-        <div className="featured-stack art-gallery">
+        <div className="stack-intro">
+          <span>FOUR PROJECTS. FOUR DIFFERENT WORLDS.</span>
+          <span>
+            SCROLL TO EXPLORE <ArrowDown size={14} />
+          </span>
+        </div>
+        <div className="featured-stack art-gallery" ref={stackRef}>
           {projects.slice(0, 4).map((project, i) => (
-            <article
-              className={`feature-card feature-${project.visual}`}
-              key={project.id}
-              style={{ '--card-index': i }}
-              data-reveal
-            >
-              <div className="feature-surface">
-                <div className="feature-info">
-                  <div className="feature-top">
-                    <span>EXPLORATION / 0{i + 1}</span>
-                    <span>{project.role}</span>
+            <Fragment key={project.id}>
+              <span className="stack-anchor" aria-hidden="true" />
+              <article
+                className={`feature-card feature-${project.visual}`}
+                style={{ '--card-index': i }}
+              >
+                <div className="feature-surface">
+                  <div className="feature-info">
+                    <div className="feature-top">
+                      <span>EXPLORATION / 0{i + 1}</span>
+                      <span>{project.role}</span>
+                    </div>
+                    <h3>{titles[i]}</h3>
+                    <p>{project.description}</p>
+                    <div className="tag-list">
+                      {project.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                    <button
+                      className="project-open"
+                      onClick={() => setSelected(project)}
+                      aria-label={`Explore ${project.title}`}
+                    >
+                      <span>{project.title}</span>
+                      <ArrowUpRight size={25} />
+                    </button>
                   </div>
-                  <h3>{titles[i]}</h3>
-                  <p>{project.description}</p>
-                  <div className="tag-list">
-                    {project.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
+                  <div className="feature-art">
+                    <ProjectEvidence project={project} />
+                    <span className="visual-caption">{project.title.toUpperCase()}</span>
+                    <button
+                      className="art-bookmark"
+                      aria-label={`${saved.includes(project.id) ? 'Unsave' : 'Save'} featured ${project.title}`}
+                      aria-pressed={saved.includes(project.id)}
+                      onClick={() => toggleSave(project.id)}
+                    >
+                      <Bookmark
+                        size={18}
+                        fill={saved.includes(project.id) ? 'currentColor' : 'none'}
+                      />
+                      <span>{saved.includes(project.id) ? 'Saved' : 'Save'}</span>
+                    </button>
+                    <span className="art-number" aria-hidden="true">
+                      0{i + 1}
+                    </span>
                   </div>
-                  <button
-                    className="project-open"
-                    onClick={() => setSelected(project)}
-                    aria-label={`Explore ${project.title}`}
-                  >
-                    <span>{project.title}</span>
-                    <ArrowUpRight size={25} />
-                  </button>
                 </div>
-                <div className="feature-art">
-                  <ProjectEvidence project={project} />
-                  <span className="visual-caption">{project.title.toUpperCase()}</span>
-                  <button
-                    className="art-bookmark"
-                    aria-label={`${saved.includes(project.id) ? 'Unsave' : 'Save'} featured ${project.title}`}
-                    aria-pressed={saved.includes(project.id)}
-                    onClick={() => toggleSave(project.id)}
-                  >
-                    <Bookmark
-                      size={18}
-                      fill={saved.includes(project.id) ? 'currentColor' : 'none'}
-                    />
-                    <span>{saved.includes(project.id) ? 'Saved' : 'Save'}</span>
-                  </button>
-                  <span className="art-number" aria-hidden="true">
-                    0{i + 1}
-                  </span>
-                </div>
-              </div>
-            </article>
+              </article>
+            </Fragment>
           ))}
         </div>
         {saved.length > 0 && (
