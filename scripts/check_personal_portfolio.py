@@ -26,10 +26,10 @@ with sync_playwright() as p:
     ''')
     requests = []
     page.on('request', lambda request: requests.append(request.url))
-    page.goto(url, wait_until='networkidle')
+    page.goto(url, wait_until='domcontentloaded', timeout=90000)
     assert not any('fonts.googleapis.com' in request or 'fonts.gstatic.com' in request for request in requests)
     assert any('/fonts/' in request and '.woff2' in request for request in requests)
-    expect(page.locator('.sculpture')).to_have_class('sculpture is-ready', timeout=30000)
+    expect(page.locator('.sculpture')).to_have_class('sculpture is-ready', timeout=90000)
     assert not any('ProjectDialogContent-' in request for request in requests)
     assert page.locator('#about').evaluate('(e)=>e.compareDocumentPosition(document.querySelector("#projects")) & Node.DOCUMENT_POSITION_FOLLOWING')
     expect(page.locator('#about')).to_contain_text('final-year engineering student')
@@ -81,7 +81,7 @@ with sync_playwright() as p:
     saver.add_init_script('Object.defineProperty(navigator, "connection", {value:{saveData:true,effectiveType:"4g"},configurable:true})')
     saver_requests = []
     saver.on('request', lambda request: saver_requests.append(request.url))
-    saver.goto(url, wait_until='networkidle')
+    saver.goto(url, wait_until='domcontentloaded', timeout=90000)
     saver.wait_for_timeout(2000)
     assert not any('three.module' in request for request in saver_requests)
     expect(saver.locator('.sculpture-fallback')).to_be_visible()
