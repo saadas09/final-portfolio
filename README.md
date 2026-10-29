@@ -57,9 +57,9 @@ python scripts/check_portfolio.py https://abs-saad.netlify.app/
 
 The browser checks exercise all 14 project dialogs, filtering, focus restoration, keyboard controls, mobile navigation, four actual PDF downloads, copy email, 3D controls, animated layouts, the motion toggle, WebGL fallback, and text/viewport overflow at nine widths from 320 to 1920 pixels. Screenshots and the verification summary go to the git-ignored `.qa` directory.
 
-The site uses native scrolling and a staggered project gallery with scroll reveals. The 3D renderer skips offscreen/hidden frames and does not continuously redraw when paused. Three.js is loaded separately from the initial application. Devices without WebGL retain a CSS sculpture and all portfolio content. Generated project covers are labeled as concept art; real evidence remains in the case studies.
+The site uses native scrolling and a staggered project gallery with scroll reveals. The 3D renderer skips offscreen/hidden frames and does not continuously redraw when paused. Three.js is loaded separately from the initial application. Devices without WebGL retain a CSS sculpture and all portfolio content. Project covers illustrate the product workflow; real evidence remains in the case studies.
 
-`public/projects/art/` contains four optimized WebP artworks generated with the built-in image tool. The complete prompt set is in `docs/artwork.md`.
+`public/projects/art/*-product.webp` contains four optimized product-interface illustrations. Current prompts and provenance are in `docs/product-artwork.md`. The earlier abstract cover prompts are archived in `docs/artwork.md`.
 
 `ProjectExplorer.jsx` adds technology search, category filters, random discovery, local bookmarks, comparison, and copyable shortlists. Bookmarks use the `saad-project-shortlist` localStorage key and fall back to in-memory state when storage is unavailable. Run `python scripts/check_gallery.py` to verify these flows.
 

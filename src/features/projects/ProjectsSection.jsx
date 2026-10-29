@@ -17,6 +17,14 @@ export default function ProjectsSection() {
       projects.find((p) => p.id === new URLSearchParams(window.location.search).get('project')) ||
       null,
   );
+  useEffect(() => {
+    const open = (event) => {
+      const project = projects.find((p) => p.id === event.detail);
+      if (project) setSelected(project);
+    };
+    window.addEventListener('portfolio:open-project', open);
+    return () => window.removeEventListener('portfolio:open-project', open);
+  }, []);
   const [expanded, setExpanded] = useState(false);
   const [saved, setSaved] = useState(() => {
     try {
@@ -126,7 +134,7 @@ export default function ProjectsSection() {
                 </div>
                 <div className="feature-art">
                   <ProjectEvidence project={project} />
-                  <span className="visual-caption">AI-GENERATED CONCEPT ART / 0{i + 1}</span>
+                  <span className="visual-caption">{project.title.toUpperCase()}</span>
                   <button
                     className="art-bookmark"
                     aria-label={`${saved.includes(project.id) ? 'Unsave' : 'Save'} featured ${project.title}`}
